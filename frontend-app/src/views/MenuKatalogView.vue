@@ -2,15 +2,41 @@
   <div class="min-h-screen bg-background pb-32 font-sans relative">
     
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
-      <div class="px-6 py-5 flex justify-between items-center">
+      <div class="px-6 pt-5 pb-3 flex justify-between items-center">
         <div>
-          <img src="@/assets/logo-panjang.png" alt="Logo" class="h-12 sm:h-14 w-auto object-contain mb-1" />
+          <img src="@/assets/logo-panjang.png" alt="Logo" class="h-10 sm:h-12 w-auto object-contain mb-1" />
           <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1 flex flex-wrap items-center gap-2">
             <span v-if="orderStore.nomorMeja" class="text-white bg-[#B98B6A] px-3 py-0.5 rounded-lg font-bold text-xs shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
             <button @click="showCustomerModal = true" class="text-[#7A4A3A] bg-[#B98B6A]/10 hover:bg-[#B98B6A]/20 px-3 py-0.5 rounded-lg font-bold text-xs border border-[#B98B6A]/30 flex items-center gap-1 transition-colors">
               👤 {{ orderStore.customerName || 'Isi Nama' }}
             </button>
           </p>
+        </div>
+      </div>
+      
+      <!-- Search Input Bar -->
+      <div class="px-6 pb-3">
+        <div class="relative flex items-center">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#7A4A3A]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            placeholder="Cari nama menu atau rasa..." 
+            class="w-full pl-10 pr-9 py-2.5 rounded-xl bg-white/90 border border-[#B98B6A]/40 text-[#4B2E2A] text-xs font-bold placeholder-[#7A4A3A]/60 focus:outline-none focus:bg-white focus:border-[#4B2E2A] transition-all shadow-sm"
+          />
+          <button 
+            v-if="searchQuery" 
+            @click="searchQuery = ''" 
+            class="absolute inset-y-0 right-0 pr-3 flex items-center text-[#7A4A3A] hover:text-[#4B2E2A]"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
         </div>
       </div>
       
@@ -53,8 +79,17 @@
         <p class="text-textColor/70 text-base font-medium">Menu belum tersedia di outlet ini.</p>
       </div>
 
+      <div v-else-if="Object.keys(filteredGroupedMenus).length === 0" class="text-center py-16 bg-white/60 rounded-3xl border border-[#B98B6A]/20 shadow-sm px-4">
+        <div class="text-4xl mb-3">🔍</div>
+        <p class="text-[#4B2E2A] font-bold text-base">Menu "{{ searchQuery }}" tidak ditemukan</p>
+        <p class="text-[#4B2E2A]/70 text-xs mt-1">Coba gunakan kata kunci lain atau hapus pencarian</p>
+        <button @click="searchQuery = ''" class="mt-4 px-4 py-2 bg-[#B98B6A] text-white text-xs font-bold rounded-xl shadow-sm hover:bg-[#7A4A3A] transition-colors">
+          Lihat Semua Menu
+        </button>
+      </div>
+
       <div v-else class="space-y-12">
-        <div v-for="(items, category) in groupedMenus" :key="category" :id="'category-' + category" class="scroll-mt-36">
+        <div v-for="(items, category) in filteredGroupedMenus" :key="category" :id="'category-' + category" class="scroll-mt-36">
           <h2 class="text-2xl font-extrabold text-textColor mb-6 flex items-center gap-3">
             <span class="w-2 h-8 bg-primary rounded-full inline-block"></span>
             {{ category }}
@@ -246,6 +281,7 @@ const cartStore = useCartStore();
 
 const menus = ref([]);
 const isLoading = ref(true);
+const searchQuery = ref('');
 
 const showCustomerModal = ref(false);
 const customerName = ref(orderStore.customerName || '');
@@ -307,6 +343,27 @@ const groupedMenus = computed(() => {
   });
   
   return finalGroups;
+});
+
+const filteredGroupedMenus = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase();
+  if (!query) return groupedMenus.value;
+
+  const result = {};
+  Object.keys(groupedMenus.value).forEach(cat => {
+    const matchingItems = groupedMenus.value[cat].filter(menu => {
+      const matchName = menu.name.toLowerCase().includes(query);
+      const matchDesc = menu.description ? menu.description.toLowerCase().includes(query) : false;
+      const matchCat = cat.toLowerCase().includes(query);
+      return matchName || matchDesc || matchCat;
+    });
+
+    if (matchingItems.length > 0) {
+      result[cat] = matchingItems;
+    }
+  });
+
+  return result;
 });
 
 const activeCategory = ref('');
