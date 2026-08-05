@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden overflow-y-hidden">
     
     <!-- Background Aesthetic Logo (Bottom Right) -->
-    <div class="absolute -bottom-16 -right-16 w-72 sm:w-96 opacity-15 pointer-events-none z-0">
+    <div class="absolute -bottom-8 -right-10 w-80 sm:w-[28rem] pointer-events-none z-0">
       <img src="@/assets/rhpintu.PNG" alt="Aesthetic Background" class="w-full h-auto object-contain" />
     </div>
 
