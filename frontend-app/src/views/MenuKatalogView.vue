@@ -265,7 +265,7 @@
     </div>
     </transition>
 
-    <BottomNav />
+    <BottomNav v-if="!selectedMenu && !showCustomerModal" />
   </div>
 </template>
 
