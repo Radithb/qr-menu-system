@@ -262,7 +262,7 @@
         '--endY': `${dot.endY}px`,
       }"
     >
-      <div class="w-4 h-4 bg-red-500 rounded-full shadow-md dot-element"></div>
+      <div class="w-4 h-4 bg-[#4B2E2A] rounded-full shadow-md dot-element"></div>
     </div>
 
     <BottomNav v-if="!selectedMenu && !showCustomerModal" />
