@@ -111,6 +111,9 @@ const validateCode = async () => {
     
     if (response.data.success) {
       orderStore.setOutletData(inputCode.value, response.data.data);
+      if (response.data.data.nomor_meja) {
+        orderStore.setNomorMeja(response.data.data.nomor_meja);
+      }
       router.push({ name: 'MenuKatalog' });
     }
   } catch (error) {

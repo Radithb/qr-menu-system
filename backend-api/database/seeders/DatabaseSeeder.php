@@ -15,10 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $outlet = Outlet::create([
-            'name' => 'QR Cafe Cabang Utama',
-            'kode_outlet' => 'S2LZ6B'
-        ]);
+        $outletsData = [
+            ['name' => 'Kopi Ruang Hati', 'kode_outlet' => 'S2LZ6B', 'nomor_meja' => '01'],
+            ['name' => 'Kopi Ruang Hati', 'kode_outlet' => 'MEJA01', 'nomor_meja' => '01'],
+            ['name' => 'Kopi Ruang Hati', 'kode_outlet' => 'MEJA02', 'nomor_meja' => '02'],
+            ['name' => 'Kopi Ruang Hati', 'kode_outlet' => 'MEJA03', 'nomor_meja' => '03'],
+        ];
+
+        $createdOutlets = [];
+        foreach ($outletsData as $od) {
+            $createdOutlets[] = Outlet::create($od);
+        }
 
         $addOnsMinuman = [
             [
@@ -121,9 +128,11 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Hot Tea', 'category' => 'Hot Drink', 'price' => 15000, 'variants' => null],
         ];
 
-        foreach ($menus as $m) {
-            $m['outlet_id'] = $outlet->id;
-            Menu::create($m);
+        foreach ($createdOutlets as $o) {
+            foreach ($menus as $m) {
+                $m['outlet_id'] = $o->id;
+                Menu::create($m);
+            }
         }
     }
 }

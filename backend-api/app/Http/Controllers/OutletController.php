@@ -28,6 +28,7 @@ class OutletController extends Controller
                 'id' => $outlet->id,
                 'name' => $outlet->name,
                 'kode_outlet' => $outlet->kode_outlet,
+                'nomor_meja' => $outlet->nomor_meja ?? '01',
             ]
         ], 200);
     }
