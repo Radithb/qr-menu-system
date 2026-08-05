@@ -1,19 +1,19 @@
 <template>
   <div class="min-h-screen bg-background pb-32 font-sans relative">
     
-    <header class="bg-background/90 backdrop-blur-md shadow-sm sticky top-0 z-10 border-b-2 border-primary/10">
+    <header class="bg-secondary shadow-md sticky top-0 z-10 border-b-4 border-primary">
       <div class="px-6 py-5 flex items-center gap-4">
-        <button @click="router.back()" class="p-2 -ml-2 rounded-full hover:bg-primary/10 text-textColor transition-colors">
+        <button @click="router.back()" class="p-2 -ml-2 rounded-full hover:bg-card/20 text-card transition-colors">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-2xl font-extrabold text-textColor tracking-tight font-heading uppercase">Pesanan Anda</h1>
+        <h1 class="text-2xl font-extrabold text-card tracking-tight font-heading uppercase">Pesanan Anda</h1>
       </div>
     </header>
 
     <main class="p-6 space-y-6">
-      <div v-if="cartStore.items.length === 0" class="text-center py-16 bg-white rounded-3xl border-2 border-primary/10 shadow-lg">
+      <div v-if="cartStore.items.length === 0" class="text-center py-16 bg-card rounded-3xl border-2 border-primary/10 shadow-lg">
         <p class="text-textColor/70 text-base font-medium">Keranjang belanja Anda masih kosong.</p>
         <button 
           @click="router.push({name: 'MenuKatalog'})" 
@@ -25,7 +25,7 @@
 
       <div v-else class="space-y-6">
         <!-- Item List -->
-        <div class="bg-white rounded-3xl p-5 shadow-md border-2 border-primary/5 space-y-4">
+        <div class="bg-card rounded-3xl p-5 shadow-md border-2 border-primary/5 space-y-4">
           <div v-for="(item, index) in cartStore.items" :key="index" class="flex items-center justify-between pb-4 border-b border-primary/10 last:border-0 last:pb-0">
             <div class="flex-1 pr-4">
               <h3 class="font-bold text-textColor text-base font-heading">{{ item.name }}</h3>
@@ -40,7 +40,7 @@
             <div class="flex items-center gap-3 bg-background/50 rounded-xl p-1 border border-primary/10 flex-shrink-0">
               <button 
                 @click="cartStore.updateQuantity(index, item.quantity - 1)"
-                class="w-8 h-8 flex items-center justify-center rounded-lg bg-white text-textColor font-bold shadow-sm active:scale-90"
+                class="w-8 h-8 flex items-center justify-center rounded-lg bg-card text-textColor font-bold shadow-sm active:scale-90"
               >-</button>
               <span class="font-bold w-4 text-center">{{ item.quantity }}</span>
               <button 
@@ -52,7 +52,7 @@
         </div>
 
         <!-- Summary -->
-        <div class="bg-white rounded-3xl p-5 shadow-md border-2 border-primary/5 space-y-3">
+        <div class="bg-card rounded-3xl p-5 shadow-md border-2 border-primary/5 space-y-3">
           <h3 class="font-bold text-textColor font-heading text-lg border-b border-primary/10 pb-2">Ringkasan</h3>
           <div class="flex justify-between items-center">
             <span class="text-textColor/70 font-medium">Total Item</span>

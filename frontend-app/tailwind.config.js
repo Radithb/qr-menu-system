@@ -7,10 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#C19A6B',    
-        secondary: '#E3CAA5',  
-        background: '#D6C0A4', // Visibly darker beige/light brown
-        textColor: '#594025',  
+        primary: '#B98B6A',    // Medium-light brown / Tan (Buttons, active accents)
+        secondary: '#7A4A3A',  // Medium-dark brown (Headers, secondary elements)
+        background: '#E9D8C6', // Light beige (Main page background)
+        textColor: '#4B2E2A',  // Darkest brown (Main text)
+        card: '#F7F2EC',       // Off-white (Cards, Modals, very light background)
         cta: '#ffffff',
       },
       fontFamily: {

@@ -1,13 +1,13 @@
 <template>
   <div class="min-h-screen bg-background pb-32 font-sans relative">
     
-    <header class="bg-[#6B4423] shadow-md sticky top-0 z-10 border-b-4 border-primary">
+    <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 py-5 flex justify-between items-center">
         <div>
-          <h1 class="text-3xl font-extrabold text-white tracking-tight font-heading uppercase">Menu Kami</h1>
-          <p class="text-sm font-medium text-white/80 mt-1">
+          <h1 class="text-3xl font-extrabold text-[#4B2E2A] tracking-tight font-heading uppercase">Menu Kami</h1>
+          <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1">
             📍 {{ orderStore.outletData?.name || 'Memuat Lokasi...' }} 
-            <span v-if="orderStore.nomorMeja" class="ml-2 text-[#6B4423] bg-white px-3 py-1 rounded-lg font-bold shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
+            <span v-if="orderStore.nomorMeja" class="ml-2 text-white bg-[#B98B6A] px-3 py-1 rounded-lg font-bold shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
           </p>
         </div>
       </div>
@@ -19,7 +19,7 @@
           :key="cat"
           :id="'tab-' + cat"
           @click="scrollToCategory(cat)"
-          :class="activeCategory === cat ? 'bg-white text-[#6B4423] shadow-md scale-105' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'"
+          :class="activeCategory === cat ? 'bg-[#4B2E2A] text-white shadow-md scale-105' : 'bg-transparent text-[#4B2E2A]/80 border border-[#4B2E2A]/30 hover:bg-[#4B2E2A]/10'"
           class="px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all snap-start"
         >
           {{ cat }}
@@ -33,7 +33,7 @@
         <p class="text-textColor/70 mt-6 text-base font-bold animate-pulse tracking-wide">Menyiapkan hidangan terbaik...</p>
       </div>
       
-      <div v-else-if="menus.length === 0" class="text-center py-16 bg-white rounded-3xl border-2 border-primary/10 shadow-lg">
+      <div v-else-if="menus.length === 0" class="text-center py-16 bg-card rounded-3xl border-2 border-primary/10 shadow-lg">
         <p class="text-textColor/70 text-base font-medium">Menu belum tersedia di outlet ini.</p>
       </div>
 
@@ -48,25 +48,25 @@
             <div 
               v-for="menu in items" 
               :key="menu.id" 
-              class="bg-white rounded-3xl p-5 shadow-sm border-2 border-primary/5 flex gap-5 items-center transition-all active:scale-[0.98] active:bg-background/50 cursor-pointer"
+              class="bg-[#F7F2EC] rounded-3xl p-5 shadow-md border border-[#B98B6A]/20 flex gap-5 items-center transition-all active:scale-[0.98] cursor-pointer"
               @click="openAddModal(menu)"
             >
-              <div class="w-28 h-28 flex-shrink-0 bg-background rounded-2xl overflow-hidden border border-primary/10 relative">
+              <div class="w-28 h-28 flex-shrink-0 bg-[#E9D8C6] rounded-2xl overflow-hidden border border-[#B98B6A]/30 relative">
                 <img v-if="menu.image_url" :src="menu.image_url" :alt="menu.name" class="w-full h-full object-cover" />
-                <div v-else class="w-full h-full flex flex-col items-center justify-center text-primary/40 text-sm font-bold">
+                <div v-else class="w-full h-full flex flex-col items-center justify-center text-[#7A4A3A]/60 text-sm font-bold">
                   <span class="text-2xl mb-1">🍽️</span> No Pic
                 </div>
               </div>
               
               <div class="flex-1">
-                <h3 class="font-bold text-textColor text-lg leading-tight font-heading">{{ menu.name }}</h3>
-                <p v-if="menu.description" class="text-sm text-textColor/60 mt-1 line-clamp-2 leading-relaxed">{{ menu.description }}</p>
+                <h3 class="font-bold text-[#4B2E2A] text-lg leading-tight font-heading">{{ menu.name }}</h3>
+                <p v-if="menu.description" class="text-sm text-[#4B2E2A]/70 mt-1 line-clamp-2 leading-relaxed">{{ menu.description }}</p>
                 
                 <div class="mt-4 flex justify-between items-center">
-                  <span class="font-extrabold text-secondary text-base">Rp {{ formatPrice(menu.price) }}</span>
+                  <span class="font-extrabold text-[#7A4A3A] text-base">Rp {{ formatPrice(menu.price) }}</span>
                   <button 
                     @click.stop="openAddModal(menu)"
-                    class="bg-primary/10 text-primary hover:bg-primary hover:text-cta px-5 py-2.5 rounded-xl text-sm font-bold active:scale-90 transition-colors duration-200"
+                    class="bg-[#B98B6A] text-white hover:bg-[#7A4A3A] px-5 py-2.5 rounded-xl text-sm font-bold active:scale-90 transition-colors duration-200 shadow-sm"
                   >
                     Tambah
                   </button>
@@ -84,11 +84,11 @@
     </transition>
     
     <transition name="slide-up">
-      <div v-if="selectedMenu" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-40 max-h-[85vh] flex flex-col">
+      <div v-if="selectedMenu" class="fixed bottom-0 left-0 right-0 bg-card rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-40 max-h-[85vh] flex flex-col">
         <div class="p-6 border-b-2 border-primary/10 flex-shrink-0 flex justify-between items-start">
           <div>
             <h2 class="text-2xl font-extrabold text-textColor font-heading">{{ selectedMenu.name }}</h2>
-            <p class="text-secondary font-bold mt-1 text-lg">Rp {{ formatPrice(selectedMenu.price) }}</p>
+            <p class="text-primary font-bold mt-1 text-lg">Rp {{ formatPrice(selectedMenu.price) }}</p>
           </div>
           <button @click="closeAddModal" class="p-2 bg-background rounded-full text-textColor/50 hover:bg-primary/10 transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -134,14 +134,14 @@
           <div class="pt-4 border-t-2 border-primary/10 flex items-center justify-between">
             <span class="font-bold text-textColor text-lg">Jumlah</span>
             <div class="flex items-center gap-4 bg-background/50 rounded-2xl p-1 border border-primary/10">
-              <button @click="modalQuantity > 1 && modalQuantity--" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white text-textColor font-bold shadow-sm active:scale-90">-</button>
+              <button @click="modalQuantity > 1 && modalQuantity--" class="w-10 h-10 flex items-center justify-center rounded-xl bg-card text-textColor font-bold shadow-sm active:scale-90">-</button>
               <span class="font-bold w-6 text-center text-lg">{{ modalQuantity }}</span>
               <button @click="modalQuantity++" class="w-10 h-10 flex items-center justify-center rounded-xl bg-primary text-cta font-bold shadow-sm active:scale-90">+</button>
             </div>
           </div>
         </div>
 
-        <div class="p-6 bg-white border-t-2 border-primary/10 flex-shrink-0">
+        <div class="p-6 bg-card border-t-2 border-primary/10 flex-shrink-0">
           <button @click="confirmAddToCart" class="w-full bg-primary text-cta rounded-2xl py-4 px-6 flex justify-between items-center shadow-xl active:scale-[0.97] transition-all">
             <span class="font-bold text-lg tracking-widest uppercase">Tambah Pesanan</span>
             <span class="font-extrabold text-xl font-heading">Rp {{ formatPrice(modalTotalPrice) }}</span>
