@@ -48,7 +48,7 @@
           <!-- Nama Lengkap -->
           <div class="flex justify-between items-center p-4 bg-white/70 rounded-2xl border border-[#B98B6A]/20">
             <div class="flex items-center gap-3">
-              <span class="text-xl">📝</span>
+              <img src="@/assets/pen.png" alt="Nama Pemesan" class="w-6 h-6 object-contain" />
               <div>
                 <p class="text-[10px] font-extrabold uppercase tracking-wider text-[#7A4A3A]">Nama Pemesan</p>
                 <p class="text-base font-bold text-[#4B2E2A]">
