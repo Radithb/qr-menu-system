@@ -32,7 +32,7 @@
           <!-- Nomor Meja -->
           <div class="flex justify-between items-center p-4 bg-white/70 rounded-2xl border border-[#B98B6A]/20">
             <div class="flex items-center gap-3">
-              <span class="text-xl">🪑</span>
+              <img src="@/assets/chair.png" alt="Nomor Meja" class="w-6 h-6 object-contain" />
               <div>
                 <p class="text-[10px] font-extrabold uppercase tracking-wider text-[#7A4A3A]">Nomor Meja</p>
                 <p class="text-base font-extrabold text-[#4B2E2A]">
