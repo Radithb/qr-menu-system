@@ -7,7 +7,7 @@
     </div>
 
     <!-- Main Card matching reference style but with brown palette -->
-    <div class="w-[85%] max-w-[320px] space-y-8 bg-[#B98B6A] text-[#4B2E2A] p-8 rounded-3xl border-2 border-[#7A4A3A] shadow-[8px_8px_0px_#4B2E2A] relative z-10">
+    <div class="w-[85%] max-w-[320px] space-y-8 bg-[#E9D8C6] text-[#4B2E2A] p-8 rounded-3xl border-2 border-[#4B2E2A] shadow-[8px_8px_0px_#4B2E2A] relative z-10">
       
       <!-- Header Section -->
       <div class="text-center space-y-3">
