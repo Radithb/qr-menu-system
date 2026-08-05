@@ -5,9 +5,12 @@
       <div class="px-6 py-5 flex justify-between items-center">
         <div>
           <h1 class="text-3xl font-extrabold text-[#4B2E2A] tracking-tight font-heading uppercase">Menu</h1>
-          <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1">
-            Kopi Ruang Hati
-            <span v-if="orderStore.nomorMeja" class="ml-2 text-white bg-[#B98B6A] px-3 py-1 rounded-lg font-bold shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
+          <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1 flex flex-wrap items-center gap-2">
+            <span>Kopi Ruang Hati</span>
+            <span v-if="orderStore.nomorMeja" class="text-white bg-[#B98B6A] px-3 py-0.5 rounded-lg font-bold text-xs shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
+            <button @click="showCustomerModal = true" class="text-[#7A4A3A] bg-[#B98B6A]/10 hover:bg-[#B98B6A]/20 px-3 py-0.5 rounded-lg font-bold text-xs border border-[#B98B6A]/30 flex items-center gap-1 transition-colors">
+              👤 {{ orderStore.customerName || 'Isi Nama' }}
+            </button>
           </p>
         </div>
       </div>
@@ -167,6 +170,51 @@
       </div>
     </transition>
 
+    <!-- Customer Info Modal -->
+    <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
+      <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6">
+        
+        <div class="text-center space-y-2">
+          <h3 class="text-2xl font-extrabold text-[#4B2E2A] font-heading uppercase">Data Pemesan</h3>
+          <p class="text-sm text-[#4B2E2A]/80 font-medium leading-relaxed">
+            Silakan masukkan nama dan email Anda agar kasir dapat memproses pesanan Anda.
+          </p>
+        </div>
+
+        <form @submit.prevent="submitCustomerInfo" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Nama Lengkap</label>
+            <input 
+              v-model="customerName" 
+              type="text" 
+              required 
+              placeholder="Contoh: Radith" 
+              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Email</label>
+            <input 
+              v-model="customerEmail" 
+              type="email" 
+              required 
+              placeholder="Contoh: radith@example.com" 
+              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full mt-4 bg-[#B98B6A] hover:bg-[#7A4A3A] text-white py-4 rounded-xl font-bold uppercase tracking-wider shadow-lg active:scale-95 transition-all"
+          >
+            Mulai Memesan
+          </button>
+        </form>
+
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -183,6 +231,16 @@ const cartStore = useCartStore();
 
 const menus = ref([]);
 const isLoading = ref(true);
+
+const showCustomerModal = ref(false);
+const customerName = ref(orderStore.customerName || '');
+const customerEmail = ref(orderStore.customerEmail || '');
+
+const submitCustomerInfo = () => {
+  if (!customerName.value || !customerEmail.value) return;
+  orderStore.setCustomerData(customerName.value, customerEmail.value);
+  showCustomerModal.value = false;
+};
 
 const selectedMenu = ref(null);
 const selectedOptions = ref({});
@@ -310,6 +368,10 @@ onMounted(async () => {
   if (!orderStore.outletData?.id) {
     router.push('/');
     return;
+  }
+  
+  if (!orderStore.customerName || !orderStore.customerEmail) {
+    showCustomerModal.value = true;
   }
   
   await fetchMenus();

@@ -56,51 +56,6 @@
       </form>
 
     </div>
-
-    <!-- Customer Info Modal -->
-    <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
-      <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6">
-        
-        <div class="text-center space-y-2">
-          <h3 class="text-2xl font-extrabold text-[#4B2E2A] font-heading uppercase">Data Pemesan</h3>
-          <p class="text-sm text-[#4B2E2A]/80 font-medium leading-relaxed">
-            Silakan masukkan nama dan email Anda agar kasir dapat memproses pesanan Anda.
-          </p>
-        </div>
-
-        <form @submit.prevent="submitCustomerInfo" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Nama Lengkap</label>
-            <input 
-              v-model="customerName" 
-              type="text" 
-              required 
-              placeholder="Contoh: Radith" 
-              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
-            />
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Email</label>
-            <input 
-              v-model="customerEmail" 
-              type="email" 
-              required 
-              placeholder="Contoh: radith@example.com" 
-              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            class="w-full mt-4 bg-[#B98B6A] hover:bg-[#7A4A3A] text-white py-4 rounded-xl font-bold uppercase tracking-wider shadow-lg active:scale-95 transition-all"
-          >
-            Lanjut ke Menu
-          </button>
-        </form>
-
-      </div>
-    </div>
   </div>
 </template>
 
@@ -156,7 +111,7 @@ const validateCode = async () => {
     
     if (response.data.success) {
       orderStore.setOutletData(inputCode.value, response.data.data);
-      showCustomerModal.value = true;
+      router.push({ name: 'MenuKatalog' });
     }
   } catch (error) {
     isError.value = true;
