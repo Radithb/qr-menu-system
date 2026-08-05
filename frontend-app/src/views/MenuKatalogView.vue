@@ -254,14 +254,16 @@
     <div 
       v-for="dot in flyingDots" 
       :key="dot.id"
-      class="fixed w-4 h-4 bg-red-500 rounded-full z-[100] pointer-events-none transition-all duration-500 ease-in-out shadow-md"
+      class="fixed z-[100] pointer-events-none dot-container top-0 left-0"
       :style="{
-        left: `${dot.x}px`,
-        top: `${dot.y}px`,
-        opacity: dot.active ? 0.3 : 1,
-        transform: dot.active ? 'scale(0.5)' : 'scale(1)'
+        '--startX': `${dot.startX}px`,
+        '--startY': `${dot.startY}px`,
+        '--endX': `${dot.endX}px`,
+        '--endY': `${dot.endY}px`,
       }"
-    ></div>
+    >
+      <div class="w-4 h-4 bg-red-500 rounded-full shadow-md dot-element"></div>
+    </div>
 
     <BottomNav v-if="!selectedMenu && !showCustomerModal" />
   </div>
@@ -542,24 +544,15 @@ const animateAddToCart = (e) => {
   const id = Date.now();
   flyingDots.value.push({
     id,
-    x: startX,
-    y: startY,
-    active: false
+    startX,
+    startY,
+    endX: window.innerWidth / 2,
+    endY: window.innerHeight - 30
   });
   
   setTimeout(() => {
-    const dot = flyingDots.value.find(d => d.id === id);
-    if (dot) {
-      dot.active = true;
-      // Fly to approximate center bottom (Pesanan Saya icon)
-      dot.x = window.innerWidth / 2;
-      dot.y = window.innerHeight - 30;
-    }
-  }, 10);
-  
-  setTimeout(() => {
     flyingDots.value = flyingDots.value.filter(d => d.id !== id);
-  }, 500);
+  }, 700);
 };
 
 
@@ -601,6 +594,25 @@ const animateAddToCart = (e) => {
 .modal-fade-leave-to .modal-box {
   opacity: 0;
   transform: translateY(30px) scale(0.95);
+}
+
+.dot-container {
+  animation: flyX 0.7s ease-in-out forwards;
+}
+
+.dot-element {
+  animation: flyY 0.7s ease-in-out forwards; 
+}
+
+@keyframes flyX {
+  0% { transform: translateX(var(--startX)); }
+  100% { transform: translateX(var(--endX)); }
+}
+
+@keyframes flyY {
+  0% { transform: translateY(var(--startY)) scale(1); opacity: 1; }
+  30% { transform: translateY(calc(var(--startY) - 150px)) scale(1.5); opacity: 1; }
+  100% { transform: translateY(var(--endY)) scale(0.2); opacity: 0; }
 }
 
 .hide-scrollbar::-webkit-scrollbar {
