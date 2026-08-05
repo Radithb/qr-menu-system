@@ -612,6 +612,7 @@ const animateAddToCart = (e) => {
 @keyframes flyY {
   0% { transform: translateY(var(--startY)) scale(1); opacity: 1; background-color: #4B2E2A; }
   30% { transform: translateY(calc(var(--startY) - 150px)) scale(1.5); opacity: 1; background-color: #4B2E2A; }
+  55% { background-color: #ef4444; }
   100% { transform: translateY(var(--endY)) scale(0.2); opacity: 0; background-color: #ef4444; }
 }
 
