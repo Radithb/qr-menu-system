@@ -4,7 +4,7 @@
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 py-5 flex justify-between items-center">
         <div>
-          <h1 class="text-3xl font-extrabold text-[#4B2E2A] tracking-tight font-heading uppercase">Menu Kami</h1>
+          <h1 class="text-3xl font-extrabold text-[#4B2E2A] tracking-tight font-heading uppercase">Menu</h1>
           <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1">
             Kopi Ruang Hati
             <span v-if="orderStore.nomorMeja" class="ml-2 text-white bg-[#B98B6A] px-3 py-1 rounded-lg font-bold shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
