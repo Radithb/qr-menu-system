@@ -2,12 +2,12 @@
   <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden">
     
     <!-- Logo Image -->
-    <div class="mb-10 w-48 sm:w-56 mx-auto">
+    <div class="absolute top-6 sm:top-10 left-1/2 -translate-x-1/2 w-40 sm:w-48 z-0">
       <img src="@/assets/rhpintu.PNG" alt="Logo" class="w-full h-auto object-contain drop-shadow-xl" />
     </div>
 
     <!-- Main Card matching reference style but with brown palette -->
-    <div class="w-[85%] max-w-[320px] space-y-8 bg-[#4B2E2A] text-[#F7F2EC] p-8 rounded-3xl border border-[#B98B6A] shadow-[8px_8px_0px_#7A4A3A] relative mx-auto">
+    <div class="w-[85%] max-w-[320px] space-y-8 bg-[#4B2E2A] text-[#F7F2EC] p-8 rounded-3xl border border-[#B98B6A] shadow-[8px_8px_0px_#7A4A3A] relative z-10">
       
       <!-- Header Section -->
       <div class="text-center space-y-3">
