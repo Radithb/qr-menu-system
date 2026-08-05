@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background pb-32 font-sans relative">
+  <div class="min-h-screen bg-background pb-48 font-sans relative">
     
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 pt-5 pb-3 flex justify-between items-center">
@@ -202,7 +202,7 @@
     </transition>
 
     <transition name="slide-up">
-      <div v-if="cartStore.totalItems > 0 && !selectedMenu" class="fixed bottom-0 left-0 right-0 p-6 bg-background/80 backdrop-blur-lg border-t-2 border-primary/10 z-20">
+      <div v-if="cartStore.totalItems > 0 && !selectedMenu" class="fixed bottom-16 left-0 right-0 p-6 bg-background/80 backdrop-blur-lg border-t-2 border-primary/10 z-20">
         <button 
           @click="goToCart"
           class="w-full bg-primary text-cta rounded-2xl py-5 px-6 flex justify-between items-center shadow-xl active:scale-[0.97] transition-transform duration-200"
