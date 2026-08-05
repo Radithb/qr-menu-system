@@ -116,7 +116,7 @@
                 <div class="mt-4 flex justify-between items-center">
                   <span class="font-extrabold text-[#7A4A3A] text-base">Rp {{ formatPrice(menu.price) }}</span>
                   <button 
-                    @click.stop="openAddModal(menu)"
+                    @click.stop="openAddModal(menu, $event)"
                     class="bg-[#B98B6A] text-white hover:bg-[#7A4A3A] px-5 py-2.5 rounded-xl text-sm font-bold active:scale-90 transition-colors duration-200 shadow-sm"
                   >
                     Tambah
@@ -193,7 +193,7 @@
         </div>
 
         <div class="p-6 bg-card border-t-2 border-primary/10 flex-shrink-0">
-          <button @click="confirmAddToCart" class="w-full bg-primary text-cta rounded-2xl py-4 px-6 flex justify-between items-center shadow-xl active:scale-[0.97] transition-all">
+          <button @click="confirmAddToCart($event)" class="w-full bg-primary text-cta rounded-2xl py-4 px-6 flex justify-between items-center shadow-xl active:scale-[0.97] transition-all">
             <span class="font-bold text-lg tracking-widest uppercase">Tambah Pesanan</span>
             <span class="font-extrabold text-xl font-heading">Rp {{ formatPrice(modalTotalPrice) }}</span>
           </button>
@@ -249,6 +249,19 @@
       </div>
     </div>
     </transition>
+
+    <!-- Flying Dots Animation -->
+    <div 
+      v-for="dot in flyingDots" 
+      :key="dot.id"
+      class="fixed w-4 h-4 bg-red-500 rounded-full z-[100] pointer-events-none transition-all duration-500 ease-in-out shadow-md"
+      :style="{
+        left: `${dot.x}px`,
+        top: `${dot.y}px`,
+        opacity: dot.active ? 0.3 : 1,
+        transform: dot.active ? 'scale(0.5)' : 'scale(1)'
+      }"
+    ></div>
 
     <BottomNav v-if="!selectedMenu && !showCustomerModal" />
   </div>
@@ -458,9 +471,10 @@ const formatPrice = (price) => {
   return Number(price).toLocaleString('id-ID');
 };
 
-const openAddModal = (menu) => {
+const openAddModal = (menu, e) => {
   if (!menu.variants || menu.variants.length === 0) {
     cartStore.addToCart(menu, 1);
+    if (e) animateAddToCart(e);
     return;
   }
   
@@ -505,7 +519,7 @@ const modalTotalPrice = computed(() => {
   return total * modalQuantity.value;
 });
 
-const confirmAddToCart = () => {
+const confirmAddToCart = (e) => {
   if (selectedMenu.value) {
     // Clone menu to override price with options
     const menuToAdd = { ...selectedMenu.value };
@@ -515,7 +529,37 @@ const confirmAddToCart = () => {
     // Pass the selectedOptions 
     cartStore.addToCart(menuToAdd, modalQuantity.value, selectedOptions.value);
     closeAddModal();
+    if (e) animateAddToCart(e);
   }
+};
+
+const flyingDots = ref([]);
+const animateAddToCart = (e) => {
+  if (!e) return;
+  const startX = e.clientX;
+  const startY = e.clientY;
+  
+  const id = Date.now();
+  flyingDots.value.push({
+    id,
+    x: startX,
+    y: startY,
+    active: false
+  });
+  
+  setTimeout(() => {
+    const dot = flyingDots.value.find(d => d.id === id);
+    if (dot) {
+      dot.active = true;
+      // Fly to approximate center bottom (Pesanan Saya icon)
+      dot.x = window.innerWidth / 2;
+      dot.y = window.innerHeight - 30;
+    }
+  }, 10);
+  
+  setTimeout(() => {
+    flyingDots.value = flyingDots.value.filter(d => d.id !== id);
+  }, 500);
 };
 
 
