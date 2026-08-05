@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden">
     
     <!-- Logo Image (Absolute floating, lowered closer to cardbox) -->
-    <div class="absolute top-[18vh] sm:top-[20vh] left-1/2 -translate-x-1/2 w-40 sm:w-48 z-0">
+    <div class="absolute top-[14vh] sm:top-[16vh] left-1/2 -translate-x-1/2 w-40 sm:w-48 z-0">
       <img src="@/assets/logo-persegi.png" alt="Logo" class="w-full h-auto object-contain drop-shadow-lg" />
     </div>
 
