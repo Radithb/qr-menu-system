@@ -77,7 +77,7 @@
           @click="showEditModal = true"
           class="w-full py-4 bg-[#B98B6A] hover:bg-[#7A4A3A] text-white rounded-2xl font-bold uppercase tracking-wider shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2"
         >
-          ✏️ Edit Data Pemesan
+          Edit Data Pemesan
         </button>
       </div>
     </main>
