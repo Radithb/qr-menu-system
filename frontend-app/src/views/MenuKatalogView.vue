@@ -614,23 +614,19 @@ const animateAddToCart = (e) => {
     transform: translateY(var(--startY)) scale(1); 
     opacity: 1; 
     background-color: #4B2E2A;
-    box-shadow: 0 0 10px rgba(75, 46, 42, 0.8), 0 0 20px rgba(75, 46, 42, 0.4);
   }
   30% { 
-    transform: translateY(calc(var(--startY) - 150px)) scale(1.5); 
+    transform: translateY(calc(var(--startY) - 150px)) scale(1.4); 
     opacity: 1; 
     background-color: #4B2E2A;
-    box-shadow: 0 0 16px rgba(75, 46, 42, 0.9), 0 0 30px rgba(75, 46, 42, 0.6);
   }
   55% { 
     background-color: #ef4444;
-    box-shadow: 0 0 16px rgba(239, 68, 68, 0.9), 0 0 30px rgba(239, 68, 68, 0.6);
   }
   100% { 
     transform: translateY(var(--endY)) scale(0.2); 
     opacity: 0; 
     background-color: #ef4444;
-    box-shadow: 0 0 4px rgba(239, 68, 68, 0.5);
   }
 }
 
