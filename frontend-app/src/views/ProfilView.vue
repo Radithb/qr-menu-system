@@ -14,8 +14,8 @@
       <!-- Profile Info Card -->
       <div class="bg-[#F7F2EC] rounded-3xl p-6 shadow-md border-2 border-[#B98B6A]/30 space-y-6">
         <div class="flex items-center gap-4 border-b-2 border-[#B98B6A]/20 pb-5">
-          <div class="w-16 h-16 bg-[#B98B6A] rounded-2xl flex items-center justify-center text-white text-2xl font-extrabold shadow-sm">
-            👤
+          <div class="w-16 h-16 bg-[#B98B6A]/20 rounded-2xl flex items-center justify-center p-3 border border-[#B98B6A]/30 shadow-sm flex-shrink-0">
+            <img src="@/assets/people.png" alt="Profile" class="w-full h-full object-contain" />
           </div>
           <div>
             <h2 class="text-xl font-bold text-[#4B2E2A] leading-tight font-heading">
