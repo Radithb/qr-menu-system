@@ -185,10 +185,11 @@
     </transition>
 
     <!-- Customer Info Modal -->
-    <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
-      <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6 animate-fade-up">
-        
-        <div class="text-center space-y-2">
+    <transition name="modal-fade">
+      <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
+        <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6 modal-box">
+          
+          <div class="text-center space-y-2">
           <h3 class="text-2xl font-extrabold text-[#4B2E2A] font-heading uppercase">Data Pemesan</h3>
           <p class="text-sm text-[#4B2E2A]/80 font-medium leading-relaxed">
             Silakan masukkan nama dan email Anda agar kasir dapat memproses pesanan Anda.
@@ -228,6 +229,7 @@
 
       </div>
     </div>
+    </transition>
 
   </div>
 </template>
@@ -496,6 +498,24 @@ const goToCart = () => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.modal-fade-enter-active .modal-box,
+.modal-fade-leave-active .modal-box {
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+.modal-fade-enter-from .modal-box,
+.modal-fade-leave-to .modal-box {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
 }
 
 .hide-scrollbar::-webkit-scrollbar {
