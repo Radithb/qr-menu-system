@@ -59,9 +59,8 @@ const route = useRoute();
 const cartStore = useCartStore();
 
 const activeTab = computed(() => {
-  // Simple check for which tab is active based on route path
-  if (route.path.includes('/pesanan')) return 'orders';
-  if (route.path.includes('/profil')) return 'profile';
+  if (route.name === 'Checkout' || route.path.includes('/cart') || route.path.includes('/pesanan')) return 'orders';
+  if (route.name === 'Profil' || route.path.includes('/profil')) return 'profile';
   return 'home';
 });
 
