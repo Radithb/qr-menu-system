@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background pb-32 font-sans relative">
+  <div class="min-h-screen bg-background pb-48 font-sans relative">
     
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 py-5 flex items-center gap-4">
@@ -67,7 +67,7 @@
     </main>
 
     <transition name="slide-up">
-      <div v-if="cartStore.items.length > 0" class="fixed bottom-0 left-0 right-0 p-6 bg-[#E9D8C6]/90 backdrop-blur-lg border-t-2 border-[#B98B6A]/30 z-20">
+      <div v-if="cartStore.items.length > 0" class="fixed bottom-16 left-0 right-0 p-6 bg-[#E9D8C6]/90 backdrop-blur-lg border-t-2 border-[#B98B6A]/30 z-20">
         <button 
           @click="checkout"
           :disabled="isSubmitting"
@@ -104,6 +104,8 @@
         </button>
       </div>
     </div>
+
+    <BottomNav />
   </div>
 </template>
 
@@ -113,6 +115,7 @@ import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cartStore';
 import { useOrderStore } from '@/stores/orderStore';
 import axios from 'axios';
+import BottomNav from '@/components/BottomNav.vue';
 
 const router = useRouter();
 const cartStore = useCartStore();
