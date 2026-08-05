@@ -69,14 +69,11 @@ const hasOrders = computed(() => cartStore.totalItems > 0);
 
 const navigate = (tab) => {
   if (tab === 'home') {
-    // Assuming root or /menu/:kode is home. If we don't have the current kode_outlet in route params, 
-    // we might just emit an event or go to root. But usually they are already in home.
-    if (route.path !== '/') router.push('/'); 
+    if (route.name !== 'MenuKatalog') router.push({ name: 'MenuKatalog' });
   } else if (tab === 'orders') {
-    router.push({ name: 'Checkout' });
+    if (route.name !== 'Checkout') router.push({ name: 'Checkout' });
   } else if (tab === 'profile') {
-    // router.push('/profil');
-    alert('Fitur Profil segera hadir!');
+    if (route.name !== 'Profil') router.push({ name: 'Profil' });
   }
 };
 </script>
