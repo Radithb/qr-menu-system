@@ -1,15 +1,13 @@
 <template>
-  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-6 font-sans relative overflow-x-hidden">
+  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden">
     
-    <!-- Centered Wrapper for Logo + Cardbox -->
-    <div class="flex flex-col items-center w-full">
-      <!-- Logo Image (Positioned close above cardbox) -->
-      <div class="w-28 sm:w-32 mb-3 mx-auto">
-        <img src="@/assets/logo-persegi.png" alt="Logo" class="w-full h-auto object-contain drop-shadow-lg" />
-      </div>
+    <!-- Logo Image (Absolute floating, lowered closer to cardbox) -->
+    <div class="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 w-28 sm:w-32 z-0">
+      <img src="@/assets/logo-persegi.png" alt="Logo" class="w-full h-auto object-contain drop-shadow-lg" />
+    </div>
 
-      <!-- Main Card -->
-      <div class="w-full max-w-[280px] space-y-4 bg-[#E9D8C6] text-[#4B2E2A] p-5 rounded-2xl border-2 border-[#4B2E2A] shadow-[6px_6px_0px_#4B2E2A] relative z-10">
+    <!-- Main Card (Position untouched, centered in viewport) -->
+    <div class="w-full max-w-[280px] space-y-4 bg-[#E9D8C6] text-[#4B2E2A] p-5 rounded-2xl border-2 border-[#4B2E2A] shadow-[6px_6px_0px_#4B2E2A] relative z-10">
       
       <!-- Header Section -->
       <div class="text-center space-y-1.5">
@@ -73,7 +71,6 @@
       </form>
 
     </div>
-  </div>
   </div>
 </template>
 
