@@ -36,7 +36,7 @@
               type="text" 
               required 
               maxlength="6"
-              class="appearance-none block w-full pl-10 pr-3 py-2.5 border-2 rounded-xl text-gray-900 bg-white placeholder-gray-400 text-sm font-bold uppercase tracking-widest focus:outline-none transition-all duration-300"
+              class="appearance-none block w-full pl-9 pr-3 py-2.5 border-2 rounded-xl text-gray-900 bg-white placeholder:text-gray-400 text-xs font-bold uppercase tracking-wide focus:outline-none transition-all duration-300"
               :class="[
                 isError 
                   ? 'border-red-500 focus:ring-red-500 animate-shake' 
