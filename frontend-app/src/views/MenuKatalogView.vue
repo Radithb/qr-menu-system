@@ -6,7 +6,7 @@
         <div>
           <h1 class="text-3xl font-extrabold text-[#4B2E2A] tracking-tight font-heading uppercase">Menu Kami</h1>
           <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1">
-            📍 {{ orderStore.outletData?.name || 'Memuat Lokasi...' }} 
+            Kopi Ruang Hati
             <span v-if="orderStore.nomorMeja" class="ml-2 text-white bg-[#B98B6A] px-3 py-1 rounded-lg font-bold shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
           </p>
         </div>
@@ -54,7 +54,7 @@
               <div class="w-28 h-28 flex-shrink-0 bg-[#E9D8C6] rounded-2xl overflow-hidden border border-[#B98B6A]/30 relative">
                 <img v-if="menu.image_url" :src="menu.image_url" :alt="menu.name" class="w-full h-full object-cover" />
                 <div v-else class="w-full h-full flex flex-col items-center justify-center text-[#7A4A3A]/60 text-sm font-bold">
-                  <span class="text-2xl mb-1">🍽️</span> No Pic
+                  No Pic
                 </div>
               </div>
               
