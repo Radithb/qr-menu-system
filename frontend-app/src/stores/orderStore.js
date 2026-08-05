@@ -8,9 +8,17 @@ export const useOrderStore = defineStore('order', () => {
     const customerName = ref(localStorage.getItem('customer_name') || '');
     const customerEmail = ref(localStorage.getItem('customer_email') || '');
 
+    function resetCustomerData() {
+        customerName.value = '';
+        customerEmail.value = '';
+        localStorage.removeItem('customer_name');
+        localStorage.removeItem('customer_email');
+    }
+
     function setOutletData(kode, data) {
         kodeOutlet.value = kode;
         outletData.value = data;
+        resetCustomerData();
     }
 
     function setNomorMeja(nomor) {
