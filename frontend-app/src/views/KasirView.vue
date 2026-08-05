@@ -95,6 +95,10 @@
               <div>
                 <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Order #{{ order.id }}</span>
                 <h3 class="text-2xl font-extrabold text-gray-900 mt-1">Meja {{ order.nomor_meja }}</h3>
+                <p v-if="order.customer_name" class="text-sm font-bold text-[#7A4A3A] mt-1 flex items-center gap-1">
+                  <span>👤</span> {{ order.customer_name }}
+                  <span v-if="order.customer_email" class="text-xs text-gray-500 font-normal ml-1">({{ order.customer_email }})</span>
+                </p>
               </div>
             </div>
 

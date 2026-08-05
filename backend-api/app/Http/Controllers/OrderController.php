@@ -15,6 +15,8 @@ class OrderController extends Controller
         $request->validate([
             'outlet_id' => 'required|exists:outlets,id',
             'nomor_meja' => 'required|string',
+            'customer_name' => 'nullable|string|max:255',
+            'customer_email' => 'nullable|string|email|max:255',
             'items' => 'required|array',
             'items.*.menu_id' => 'required|exists:menus,id',
             'items.*.quantity' => 'required|integer|min:1',
@@ -28,6 +30,8 @@ class OrderController extends Controller
             $order = Order::create([
                 'outlet_id' => $request->outlet_id,
                 'nomor_meja' => $request->nomor_meja,
+                'customer_name' => $request->customer_name,
+                'customer_email' => $request->customer_email,
                 'status' => 'Menunggu Diproses',
                 'payment_status' => 'Unpaid',
             ]);

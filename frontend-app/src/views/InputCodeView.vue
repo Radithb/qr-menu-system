@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 sm:px-6 font-sans">
+  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 sm:px-6 font-sans relative">
     <div class="max-w-md w-full space-y-10 bg-white p-10 rounded-3xl shadow-xl border-4 border-primary/10">
       
       <!-- Header Section -->
@@ -56,6 +56,51 @@
       </form>
 
     </div>
+
+    <!-- Customer Info Modal -->
+    <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
+      <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6">
+        
+        <div class="text-center space-y-2">
+          <h3 class="text-2xl font-extrabold text-[#4B2E2A] font-heading uppercase">Data Pemesan</h3>
+          <p class="text-sm text-[#4B2E2A]/80 font-medium leading-relaxed">
+            Silakan masukkan nama dan email Anda agar kasir dapat memproses pesanan Anda.
+          </p>
+        </div>
+
+        <form @submit.prevent="submitCustomerInfo" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Nama Lengkap</label>
+            <input 
+              v-model="customerName" 
+              type="text" 
+              required 
+              placeholder="Contoh: Radith" 
+              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Email</label>
+            <input 
+              v-model="customerEmail" 
+              type="email" 
+              required 
+              placeholder="Contoh: radith@example.com" 
+              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full mt-4 bg-[#B98B6A] hover:bg-[#7A4A3A] text-white py-4 rounded-xl font-bold uppercase tracking-wider shadow-lg active:scale-95 transition-all"
+          >
+            Lanjut ke Menu
+          </button>
+        </form>
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,6 +115,10 @@ const isError = ref(false);
 const errorMessage = ref('');
 const isLoading = ref(false);
 
+const showCustomerModal = ref(false);
+const customerName = ref('');
+const customerEmail = ref('');
+
 const router = useRouter();
 const route = useRoute();
 const orderStore = useOrderStore();
@@ -77,6 +126,12 @@ const orderStore = useOrderStore();
 onMounted(() => {
   if (route.query.meja) {
     orderStore.setNomorMeja(route.query.meja);
+  }
+  if (orderStore.customerName) {
+    customerName.value = orderStore.customerName;
+  }
+  if (orderStore.customerEmail) {
+    customerEmail.value = orderStore.customerEmail;
   }
 });
 
@@ -101,7 +156,7 @@ const validateCode = async () => {
     
     if (response.data.success) {
       orderStore.setOutletData(inputCode.value, response.data.data);
-      router.push({ name: 'MenuKatalog' });
+      showCustomerModal.value = true;
     }
   } catch (error) {
     isError.value = true;
@@ -113,6 +168,13 @@ const validateCode = async () => {
   } finally {
     isLoading.value = false;
   }
+};
+
+const submitCustomerInfo = () => {
+  if (!customerName.value || !customerEmail.value) return;
+  orderStore.setCustomerData(customerName.value, customerEmail.value);
+  showCustomerModal.value = false;
+  router.push({ name: 'MenuKatalog' });
 };
 </script>
 

@@ -140,6 +140,8 @@ const checkout = async () => {
     const payload = {
       outlet_id: orderStore.outletData.id,
       nomor_meja: orderStore.nomorMeja || 'Takeaway',
+      customer_name: orderStore.customerName || null,
+      customer_email: orderStore.customerEmail || null,
       items: cartStore.items.map(item => ({
         menu_id: item.menu_id,
         quantity: item.quantity,
