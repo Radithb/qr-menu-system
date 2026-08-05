@@ -4,7 +4,7 @@
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 py-5 flex justify-between items-center">
         <div>
-          <img src="@/assets/logo-panjang.png" alt="Logo" class="h-16 sm:h-18 w-auto object-contain mb-1" />
+          <img src="@/assets/logo-panjang.png" alt="Logo" class="h-12 sm:h-14 w-auto object-contain mb-1" />
           <p class="text-sm font-medium text-[#4B2E2A]/80 mt-1 flex flex-wrap items-center gap-2">
             <span v-if="orderStore.nomorMeja" class="text-white bg-[#B98B6A] px-3 py-0.5 rounded-lg font-bold text-xs shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
             <button @click="showCustomerModal = true" class="text-[#7A4A3A] bg-[#B98B6A]/10 hover:bg-[#B98B6A]/20 px-3 py-0.5 rounded-lg font-bold text-xs border border-[#B98B6A]/30 flex items-center gap-1 transition-colors">
