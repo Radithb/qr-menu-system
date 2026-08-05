@@ -69,13 +69,17 @@ class OrderController extends Controller
         }
     }
 
-    public function index($outlet_id)
+    public function index($outlet_id = null)
     {
-        $orders = Order::with('items.menu')
-            ->where('outlet_id', $outlet_id)
+        $query = Order::with('items.menu')
             ->where('status', '!=', 'Selesai')
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
+
+        if ($outlet_id && $outlet_id !== 'all') {
+            $query->where('outlet_id', $outlet_id);
+        }
+
+        $orders = $query->get();
             
         return response()->json([
             'success' => true,
@@ -83,14 +87,18 @@ class OrderController extends Controller
         ]);
     }
 
-    public function history($outlet_id)
+    public function history($outlet_id = null)
     {
-        $orders = Order::with('items.menu')
-            ->where('outlet_id', $outlet_id)
+        $query = Order::with('items.menu')
             ->where('status', 'Selesai')
             ->orderBy('updated_at', 'desc')
-            ->limit(100)
-            ->get();
+            ->limit(100);
+
+        if ($outlet_id && $outlet_id !== 'all') {
+            $query->where('outlet_id', $outlet_id);
+        }
+
+        $orders = $query->get();
             
         return response()->json([
             'success' => true,

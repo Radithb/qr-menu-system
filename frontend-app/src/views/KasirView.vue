@@ -178,7 +178,7 @@ window.Pusher = Pusher;
 const currentTab = ref('active');
 const orders = ref([]);
 const historyOrders = ref([]);
-const outletId = ref(1); // Default simulasi ID outlet 1
+const outletId = ref('all'); // Ambil semua outlet agar semua pesanan pelanggan muncul di POS Kasir
 const isConnected = ref(false);
 const isLoading = ref(true);
 let echoInstance = null;
@@ -219,7 +219,7 @@ const connectWebSocket = () => {
 const fetchOrders = async () => {
   isLoading.value = true;
   try {
-    const response = await axios.get(`http://localhost:8000/api/outlets/${outletId.value}/orders`);
+    const response = await axios.get(`http://127.0.0.1:8000/api/outlets/${outletId.value}/orders`);
     if (response.data.success) {
       orders.value = response.data.data;
     }
@@ -234,7 +234,7 @@ let pollTimer = null;
 
 const fetchOrdersSilently = async () => {
   try {
-    const response = await axios.get(`http://localhost:8000/api/outlets/${outletId.value}/orders`);
+    const response = await axios.get(`http://127.0.0.1:8000/api/outlets/${outletId.value}/orders`);
     if (response.data.success) {
       orders.value = response.data.data;
     }
@@ -265,7 +265,7 @@ onUnmounted(() => {
 const fetchHistoryOrders = async () => {
   isLoading.value = true;
   try {
-    const response = await axios.get(`http://localhost:8000/api/outlets/${outletId.value}/orders/history`);
+    const response = await axios.get(`http://127.0.0.1:8000/api/outlets/${outletId.value}/orders/history`);
     if (response.data.success) {
       historyOrders.value = response.data.data;
     }
@@ -287,7 +287,7 @@ const switchTab = (tab) => {
 
 const markAsPaid = async (id) => {
   try {
-    const response = await axios.post(`http://localhost:8000/api/orders/${id}/pay`);
+    const response = await axios.post(`http://127.0.0.1:8000/api/orders/${id}/pay`);
     if (response.data.success) {
       orders.value = orders.value.filter(o => o.id !== id);
       // Optional: add to history array so it updates immediately in frontend
