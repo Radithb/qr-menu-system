@@ -1,37 +1,52 @@
 <template>
   <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 sm:px-6 font-sans relative">
-    <div class="max-w-md w-full space-y-10 bg-white p-10 rounded-3xl shadow-xl border-4 border-primary/10">
+    
+    <!-- Logo Image -->
+    <div class="mb-10 w-48 sm:w-56 mx-auto">
+      <img src="@/assets/rhpintu.PNG" alt="Logo" class="w-full h-auto object-contain drop-shadow-xl" />
+    </div>
+
+    <!-- Main Card matching reference style but with brown palette -->
+    <div class="max-w-md w-full space-y-8 bg-[#4B2E2A] text-[#F7F2EC] p-8 rounded-3xl border border-[#B98B6A] shadow-[8px_8px_0px_#7A4A3A] relative">
       
       <!-- Header Section -->
-      <div class="text-center space-y-4">
-        <h2 class="text-4xl font-extrabold text-textColor font-heading tracking-wide uppercase">
-          QR Cafe
+      <div class="text-center space-y-3">
+        <h2 class="text-4xl font-extrabold font-heading tracking-wide">
+          Selamat Datang
         </h2>
-        <p class="text-base text-textColor/70 leading-relaxed font-medium">
-          Masukkan kode outlet yang tertera pada meja Anda untuk melihat menu.
+        <p class="text-sm font-medium leading-relaxed opacity-90 px-2">
+          Silahkan meminta bantuan pelayan atau langsung input kode outlet
         </p>
       </div>
       
       <!-- Form Section -->
-      <form class="space-y-8" @submit.prevent="validateCode">
+      <form class="space-y-6" @submit.prevent="validateCode">
         <div>
           <label for="kode_outlet" class="sr-only">Kode Outlet</label>
-          <input 
-            id="kode_outlet" 
-            v-model="inputCode"
-            type="text" 
-            required 
-            maxlength="6"
-            class="appearance-none relative block w-full px-6 py-6 border-4 rounded-2xl placeholder-textColor/30 text-textColor text-center text-4xl font-bold uppercase tracking-[0.25em] focus:outline-none transition-all duration-300 shadow-inner bg-background/50"
-            :class="[
-              isError 
-                ? 'border-red-500 focus:ring-red-500 focus:border-red-500 animate-shake' 
-                : 'border-primary/20 focus:border-primary focus:bg-white'
-            ]"
-            placeholder="S2LZ6B"
-            @input="handleInput"
-          >
-          <p v-if="isError" class="mt-4 text-center text-sm font-bold text-red-600 animate-pulse">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <!-- Store Icon -->
+              <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V10C19 8.89543 18.1046 8 17 8H7C5.89543 8 5 8.89543 5 10V21M3 21H21M9 21V16C9 15.4477 9.44772 15 10 15H14C14.5523 15 15 15.4477 15 16V21M17 3H7C5.89543 3 5 3.89543 5 5V6H19V5C19 3.89543 18.1046 3 17 3Z"></path>
+              </svg>
+            </div>
+            <input 
+              id="kode_outlet" 
+              v-model="inputCode"
+              type="text" 
+              required 
+              maxlength="6"
+              class="appearance-none block w-full pl-12 pr-6 py-4 border-2 rounded-xl text-gray-900 bg-white placeholder-gray-400 text-lg font-bold uppercase tracking-widest focus:outline-none transition-all duration-300"
+              :class="[
+                isError 
+                  ? 'border-red-500 focus:ring-red-500 animate-shake' 
+                  : 'border-transparent focus:border-[#B98B6A]'
+              ]"
+              placeholder="Masukan kode outlet"
+              @input="handleInput"
+            >
+          </div>
+          <p v-if="isError" class="mt-3 text-center text-sm font-bold text-red-400 animate-pulse">
             {{ errorMessage }}
           </p>
         </div>
@@ -41,16 +56,16 @@
           <button 
             type="submit" 
             :disabled="isLoading || inputCode.length < 3"
-            class="group relative w-full flex justify-center py-5 px-4 border border-transparent text-xl font-bold rounded-2xl text-cta bg-primary hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-secondary/50 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:cursor-not-allowed shadow-lg"
+            class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-bold rounded-xl text-white bg-primary hover:bg-[#7A4A3A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:cursor-not-allowed shadow-md"
           >
             <span v-if="isLoading" class="absolute left-0 inset-y-0 flex items-center pl-6">
               <!-- SVG Spinner -->
-              <svg class="animate-spin h-6 w-6 text-cta" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg class="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             </span>
-            <span class="tracking-wider">{{ isLoading ? 'MEMVALIDASI...' : 'LIHAT MENU' }}</span>
+            <span class="tracking-wide">{{ isLoading ? 'MEMVALIDASI...' : 'Simpan' }}</span>
           </button>
         </div>
       </form>
