@@ -1,23 +1,23 @@
 <template>
   <div class="min-h-screen bg-background pb-32 font-sans relative">
     
-    <header class="bg-secondary shadow-md sticky top-0 z-10 border-b-4 border-primary">
+    <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 py-5 flex items-center gap-4">
-        <button @click="router.back()" class="p-2 -ml-2 rounded-full hover:bg-card/20 text-card transition-colors">
+        <button @click="router.back()" class="p-2 -ml-2 rounded-full hover:bg-[#B98B6A]/10 text-[#4B2E2A] transition-colors">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-2xl font-extrabold text-card tracking-tight font-heading uppercase">Pesanan Anda</h1>
+        <h1 class="text-2xl font-extrabold text-[#4B2E2A] tracking-tight font-heading uppercase">Pesanan Anda</h1>
       </div>
     </header>
 
     <main class="p-6 space-y-6">
-      <div v-if="cartStore.items.length === 0" class="text-center py-16 bg-card rounded-3xl border-2 border-primary/10 shadow-lg">
-        <p class="text-textColor/70 text-base font-medium">Keranjang belanja Anda masih kosong.</p>
+      <div v-if="cartStore.items.length === 0" class="text-center py-16 bg-[#F7F2EC] rounded-3xl border border-[#B98B6A]/20 shadow-lg">
+        <p class="text-[#4B2E2A]/70 text-base font-medium">Keranjang belanja Anda masih kosong.</p>
         <button 
           @click="router.push({name: 'MenuKatalog'})" 
-          class="mt-6 bg-primary text-cta px-6 py-3 rounded-xl font-bold active:scale-95 transition-transform"
+          class="mt-6 bg-[#B98B6A] text-white px-6 py-3 rounded-xl font-bold active:scale-95 transition-transform"
         >
           Lihat Menu
         </button>
@@ -25,53 +25,53 @@
 
       <div v-else class="space-y-6">
         <!-- Item List -->
-        <div class="bg-card rounded-3xl p-5 shadow-md border-2 border-primary/5 space-y-4">
-          <div v-for="(item, index) in cartStore.items" :key="index" class="flex items-center justify-between pb-4 border-b border-primary/10 last:border-0 last:pb-0">
+        <div class="bg-[#F7F2EC] rounded-3xl p-5 shadow-md border border-[#B98B6A]/20 space-y-4">
+          <div v-for="(item, index) in cartStore.items" :key="index" class="flex items-center justify-between pb-4 border-b border-[#B98B6A]/20 last:border-0 last:pb-0">
             <div class="flex-1 pr-4">
-              <h3 class="font-bold text-textColor text-base font-heading">{{ item.name }}</h3>
+              <h3 class="font-bold text-[#4B2E2A] text-base font-heading">{{ item.name }}</h3>
               <div v-if="item.options && Object.keys(item.options).length > 0" class="mt-1 flex flex-wrap gap-1">
-                <span v-for="(value, key) in item.options" :key="key" class="text-[10px] font-bold bg-background text-textColor/70 px-2 py-0.5 rounded uppercase">
+                <span v-for="(value, key) in item.options" :key="key" class="text-[10px] font-bold bg-[#E9D8C6] text-[#7A4A3A] px-2 py-0.5 rounded uppercase">
                   {{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}
                 </span>
               </div>
-              <p class="text-primary font-bold mt-1 text-sm">Rp {{ formatPrice(item.price) }} / porsi</p>
+              <p class="text-[#7A4A3A] font-bold mt-1 text-sm">Rp {{ formatPrice(item.price) }} / porsi</p>
             </div>
             
-            <div class="flex items-center gap-3 bg-background/50 rounded-xl p-1 border border-primary/10 flex-shrink-0">
+            <div class="flex items-center gap-3 bg-[#E9D8C6] rounded-xl p-1 border border-[#B98B6A]/30 flex-shrink-0">
               <button 
                 @click="cartStore.updateQuantity(index, item.quantity - 1)"
-                class="w-8 h-8 flex items-center justify-center rounded-lg bg-card text-textColor font-bold shadow-sm active:scale-90"
+                class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#F7F2EC] text-[#4B2E2A] font-bold shadow-sm active:scale-90"
               >-</button>
-              <span class="font-bold w-4 text-center">{{ item.quantity }}</span>
+              <span class="font-bold w-4 text-center text-[#4B2E2A]">{{ item.quantity }}</span>
               <button 
                 @click="cartStore.updateQuantity(index, item.quantity + 1)"
-                class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-cta font-bold shadow-sm active:scale-90"
+                class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#B98B6A] text-white font-bold shadow-sm active:scale-90"
               >+</button>
             </div>
           </div>
         </div>
 
         <!-- Summary -->
-        <div class="bg-card rounded-3xl p-5 shadow-md border-2 border-primary/5 space-y-3">
-          <h3 class="font-bold text-textColor font-heading text-lg border-b border-primary/10 pb-2">Ringkasan</h3>
+        <div class="bg-[#F7F2EC] rounded-3xl p-5 shadow-md border border-[#B98B6A]/20 space-y-3">
+          <h3 class="font-bold text-[#4B2E2A] font-heading text-lg border-b border-[#B98B6A]/20 pb-2">Ringkasan</h3>
           <div class="flex justify-between items-center">
-            <span class="text-textColor/70 font-medium">Total Item</span>
-            <span class="font-bold text-textColor">{{ cartStore.totalItems }}</span>
+            <span class="text-[#4B2E2A]/70 font-medium">Total Item</span>
+            <span class="font-bold text-[#4B2E2A]">{{ cartStore.totalItems }}</span>
           </div>
           <div class="flex justify-between items-center text-xl pt-2">
-            <span class="font-bold text-textColor">Total Bayar</span>
-            <span class="font-extrabold text-secondary font-heading">Rp {{ formatPrice(cartStore.totalPrice) }}</span>
+            <span class="font-bold text-[#4B2E2A]">Total Bayar</span>
+            <span class="font-extrabold text-[#7A4A3A] font-heading text-2xl">Rp {{ formatPrice(cartStore.totalPrice) }}</span>
           </div>
         </div>
       </div>
     </main>
 
     <transition name="slide-up">
-      <div v-if="cartStore.items.length > 0" class="fixed bottom-0 left-0 right-0 p-6 bg-background/80 backdrop-blur-lg border-t-2 border-primary/10 z-20">
+      <div v-if="cartStore.items.length > 0" class="fixed bottom-0 left-0 right-0 p-6 bg-[#E9D8C6]/90 backdrop-blur-lg border-t-2 border-[#B98B6A]/30 z-20">
         <button 
           @click="checkout"
           :disabled="isSubmitting"
-          class="w-full bg-primary text-cta rounded-2xl py-5 px-6 flex justify-center items-center shadow-xl active:scale-[0.97] transition-all duration-200 disabled:opacity-50"
+          class="w-full bg-[#B98B6A] hover:bg-[#7A4A3A] text-white rounded-2xl py-5 px-6 flex justify-center items-center shadow-xl active:scale-[0.97] transition-all duration-200 disabled:opacity-50"
         >
           <span v-if="isSubmitting" class="mr-3">
             <svg class="animate-spin h-5 w-5 text-cta" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
