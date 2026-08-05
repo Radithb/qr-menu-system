@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-8 font-sans relative overflow-x-hidden">
+  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden">
     
-    <!-- Logo Image -->
-    <div class="w-32 sm:w-40 mb-6 mx-auto flex-shrink-0">
+    <!-- Logo Image (Placed higher up) -->
+    <div class="absolute top-8 sm:top-12 left-1/2 -translate-x-1/2 w-32 sm:w-36 z-0">
       <img src="@/assets/logo-persegi.png" alt="Logo" class="w-full h-auto object-contain drop-shadow-lg" />
     </div>
 
-    <!-- Main Card matching reference style but with brown palette -->
-    <div class="w-full max-w-[300px] space-y-4 bg-[#E9D8C6] text-[#4B2E2A] p-5 rounded-2xl border-2 border-[#4B2E2A] shadow-[6px_6px_0px_#4B2E2A] relative z-10">
+    <!-- Main Card (Centered Vertically in screen) -->
+    <div class="w-full max-w-[280px] space-y-4 bg-[#E9D8C6] text-[#4B2E2A] p-5 rounded-2xl border-2 border-[#4B2E2A] shadow-[6px_6px_0px_#4B2E2A] relative z-10">
       
       <!-- Header Section -->
       <div class="text-center space-y-1.5">
