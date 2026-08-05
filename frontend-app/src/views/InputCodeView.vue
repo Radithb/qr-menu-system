@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 sm:px-6 font-sans relative">
+  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-8 sm:px-12 font-sans relative overflow-x-hidden">
     
     <!-- Logo Image -->
     <div class="mb-10 w-48 sm:w-56 mx-auto">
@@ -7,7 +7,7 @@
     </div>
 
     <!-- Main Card matching reference style but with brown palette -->
-    <div class="max-w-md w-full space-y-8 bg-[#4B2E2A] text-[#F7F2EC] p-8 rounded-3xl border border-[#B98B6A] shadow-[8px_8px_0px_#7A4A3A] relative">
+    <div class="max-w-sm w-full space-y-8 bg-[#4B2E2A] text-[#F7F2EC] p-8 rounded-3xl border border-[#B98B6A] shadow-[8px_8px_0px_#7A4A3A] relative mx-auto">
       
       <!-- Header Section -->
       <div class="text-center space-y-3">
