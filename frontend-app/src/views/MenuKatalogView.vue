@@ -1,13 +1,13 @@
 <template>
   <div class="min-h-screen bg-background pb-32 font-sans relative">
     
-    <header class="bg-background/90 backdrop-blur-md shadow-sm sticky top-0 z-10 border-b-2 border-primary/10">
+    <header class="bg-[#6B4423] shadow-md sticky top-0 z-10 border-b-4 border-primary">
       <div class="px-6 py-5 flex justify-between items-center">
         <div>
-          <h1 class="text-3xl font-extrabold text-textColor tracking-tight font-heading uppercase">Menu Kami</h1>
-          <p class="text-sm font-medium text-textColor/70 mt-1">
+          <h1 class="text-3xl font-extrabold text-white tracking-tight font-heading uppercase">Menu Kami</h1>
+          <p class="text-sm font-medium text-white/80 mt-1">
             📍 {{ orderStore.outletData?.name || 'Memuat Lokasi...' }} 
-            <span v-if="orderStore.nomorMeja" class="ml-2 text-primary bg-primary/10 px-3 py-1 rounded-lg font-bold">Meja {{ orderStore.nomorMeja }}</span>
+            <span v-if="orderStore.nomorMeja" class="ml-2 text-[#6B4423] bg-white px-3 py-1 rounded-lg font-bold shadow-sm">Meja {{ orderStore.nomorMeja }}</span>
           </p>
         </div>
       </div>
@@ -19,7 +19,7 @@
           :key="cat"
           :id="'tab-' + cat"
           @click="scrollToCategory(cat)"
-          :class="activeCategory === cat ? 'bg-primary text-cta shadow-md' : 'bg-white text-textColor border border-primary/20 hover:bg-primary/5'"
+          :class="activeCategory === cat ? 'bg-white text-[#6B4423] shadow-md scale-105' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'"
           class="px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all snap-start"
         >
           {{ cat }}

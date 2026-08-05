@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#92400E',
-        secondary: '#B45309',
-        cta: '#F8FAFC',
-        background: '#FEF3C7',
-        textColor: '#78350F',
+        primary: '#C19A6B',    
+        secondary: '#E3CAA5',  
+        background: '#D6C0A4', // Visibly darker beige/light brown
+        textColor: '#594025',  
+        cta: '#ffffff',
       },
       fontFamily: {
         heading: ['"Playfair Display SC"', 'serif'],
