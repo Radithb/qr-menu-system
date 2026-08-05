@@ -21,8 +21,10 @@
         class="flex flex-col items-center justify-center w-full h-full gap-1 transition-all relative"
         :class="activeTab === 'orders' ? 'text-[#4B2E2A]' : 'text-[#7A4A3A]/60 hover:text-[#7A4A3A]'"
       >
-        <!-- Notification dot if there's an order -->
-        <span v-if="hasOrders" class="absolute top-2.5 right-[30%] w-2 h-2 bg-red-500 rounded-full border border-[#E9D8C6]"></span>
+        <!-- Notification badge if there's an order -->
+        <span v-if="hasOrders" class="absolute top-1 right-[25%] min-w-[16px] h-4 px-1 bg-red-500 rounded-full border border-[#E9D8C6] flex items-center justify-center text-[9px] font-bold text-white z-10 shadow-sm">
+          {{ cartStore.totalItems }}
+        </span>
         <svg class="w-6 h-6" :class="activeTab === 'orders' ? 'fill-current' : 'fill-none stroke-current stroke-2'" viewBox="0 0 24 24">
           <path v-if="activeTab === 'orders'" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
           <path v-else stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -71,8 +73,7 @@ const navigate = (tab) => {
     // we might just emit an event or go to root. But usually they are already in home.
     if (route.path !== '/') router.push('/'); 
   } else if (tab === 'orders') {
-    // router.push('/pesanan');
-    alert('Fitur Pesanan Saya segera hadir!');
+    router.push({ name: 'Checkout' });
   } else if (tab === 'profile') {
     // router.push('/profil');
     alert('Fitur Profil segera hadir!');

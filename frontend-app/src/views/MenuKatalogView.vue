@@ -201,22 +201,7 @@
       </div>
     </transition>
 
-    <transition name="slide-up">
-      <div v-if="cartStore.totalItems > 0 && !selectedMenu" class="fixed bottom-16 left-0 right-0 p-6 bg-background/80 backdrop-blur-lg border-t-2 border-primary/10 z-20">
-        <button 
-          @click="goToCart"
-          class="w-full bg-primary text-cta rounded-2xl py-5 px-6 flex justify-between items-center shadow-xl active:scale-[0.97] transition-transform duration-200"
-        >
-          <div class="flex items-center gap-4">
-            <div class="bg-secondary px-4 py-1.5 rounded-full text-base font-bold text-cta shadow-inner">
-              {{ cartStore.totalItems }}
-            </div>
-            <span class="font-bold text-base tracking-widest uppercase">Lihat Pesanan</span>
-          </div>
-          <span class="font-extrabold text-xl font-heading">Rp {{ formatPrice(cartStore.totalPrice) }}</span>
-        </button>
-      </div>
-    </transition>
+
 
     <!-- Customer Info Modal -->
     <transition name="modal-fade">
@@ -533,9 +518,7 @@ const confirmAddToCart = () => {
   }
 };
 
-const goToCart = () => {
-  router.push({ name: 'Checkout' });
-};
+
 </script>
 
 <style scoped>
