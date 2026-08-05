@@ -46,7 +46,7 @@
           <div class="flex gap-4 items-center">
             <div class="bg-gray-100 p-1 rounded-xl flex gap-1 font-bold text-sm border border-gray-200">
               <button 
-                @click="currentTab = 'active'"
+                @click="switchTab('active')"
                 :class="currentTab === 'active' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
                 class="px-5 py-2 rounded-lg transition-all"
               >
@@ -60,6 +60,14 @@
                 Riwayat
               </button>
             </div>
+
+            <button 
+              @click="currentTab === 'active' ? fetchOrders() : fetchHistoryOrders()"
+              class="p-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold transition-all shadow-sm border border-gray-200 flex items-center gap-1 text-sm"
+              title="Refresh Pesanan"
+            >
+              🔄 <span class="hidden sm:inline">Refresh</span>
+            </button>
           </div>
           
           <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 flex gap-6 ml-6">
@@ -222,12 +230,33 @@ const fetchOrders = async () => {
   }
 };
 
+let pollTimer = null;
+
+const fetchOrdersSilently = async () => {
+  try {
+    const response = await axios.get(`http://localhost:8000/api/outlets/${outletId.value}/orders`);
+    if (response.data.success) {
+      orders.value = response.data.data;
+    }
+  } catch (error) {
+    console.error('Gagal mengambil data pesanan', error);
+  }
+};
+
 onMounted(() => {
   fetchOrders();
   connectWebSocket();
+  
+  // Polling otomatis setiap 3 detik agar pesanan baru selalu otomatis muncul
+  pollTimer = setInterval(() => {
+    if (currentTab.value === 'active') {
+      fetchOrdersSilently();
+    }
+  }, 3000);
 });
 
 onUnmounted(() => {
+  if (pollTimer) clearInterval(pollTimer);
   if (echoInstance) {
     echoInstance.disconnect();
   }
@@ -251,6 +280,8 @@ const switchTab = (tab) => {
   currentTab.value = tab;
   if (tab === 'history') {
     fetchHistoryOrders();
+  } else if (tab === 'active') {
+    fetchOrders();
   }
 };
 
