@@ -11,8 +11,34 @@
     </header>
 
     <main class="max-w-md mx-auto p-6 space-y-6">
+      <!-- Skeleton Loading State -->
+      <div v-if="isLoading" class="bg-[#F7F2EC] rounded-3xl p-6 border-2 border-[#B98B6A]/30 space-y-6 animate-pulse">
+        <!-- Header Profile Skeleton -->
+        <div class="flex items-center gap-4 border-b-2 border-[#B98B6A]/20 pb-5">
+          <div class="w-16 h-16 bg-[#B98B6A]/20 rounded-2xl flex-shrink-0"></div>
+          <div class="space-y-2 flex-1">
+            <div class="h-5 bg-[#B98B6A]/20 rounded-md w-2/3"></div>
+            <div class="h-3.5 bg-[#B98B6A]/15 rounded-md w-1/2"></div>
+          </div>
+        </div>
+
+        <!-- Details Skeleton List -->
+        <div class="space-y-4">
+          <div v-for="i in 3" :key="i" class="p-4 bg-white/70 rounded-2xl border border-[#B98B6A]/20 flex items-center gap-3">
+            <div class="w-6 h-6 bg-[#B98B6A]/20 rounded-md flex-shrink-0"></div>
+            <div class="space-y-1.5 flex-1">
+              <div class="h-3 bg-[#B98B6A]/15 rounded-md w-1/3"></div>
+              <div class="h-4 bg-[#B98B6A]/20 rounded-md w-1/2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button Skeleton -->
+        <div class="h-12 bg-[#B98B6A]/20 rounded-2xl w-full"></div>
+      </div>
+
       <!-- Profile Info Card -->
-      <div class="bg-[#F7F2EC] rounded-3xl p-6 shadow-md border-2 border-[#B98B6A]/30 space-y-6">
+      <div v-else class="bg-[#F7F2EC] rounded-3xl p-6 shadow-md border-2 border-[#B98B6A]/30 space-y-6">
         <div class="flex items-center gap-4 border-b-2 border-[#B98B6A]/20 pb-5">
           <div class="w-16 h-16 bg-[#B98B6A]/20 rounded-2xl flex items-center justify-center p-3 border border-[#B98B6A]/30 shadow-sm flex-shrink-0">
             <img src="@/assets/people.png" alt="Profile" class="w-full h-full object-contain" />
@@ -142,11 +168,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useOrderStore } from '@/stores/orderStore';
 import BottomNav from '@/components/BottomNav.vue';
 
 const orderStore = useOrderStore();
+const isLoading = ref(true);
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 400);
+});
 
 const showEditModal = ref(false);
 const editName = ref(orderStore.customerName || '');
