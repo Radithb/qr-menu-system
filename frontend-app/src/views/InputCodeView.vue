@@ -1,6 +1,11 @@
 <template>
-  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden">
+  <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans relative overflow-x-hidden overflow-y-hidden">
     
+    <!-- Background Aesthetic Logo (Bottom Right) -->
+    <div class="absolute -bottom-16 -right-16 w-72 sm:w-96 opacity-15 pointer-events-none z-0">
+      <img src="@/assets/rhpintu.PNG" alt="Aesthetic Background" class="w-full h-auto object-contain" />
+    </div>
+
     <!-- Logo Image (Absolute floating, lowered closer to cardbox) -->
     <div class="absolute top-[14vh] sm:top-[16vh] left-1/2 -translate-x-1/2 w-40 sm:w-48 z-0">
       <img src="@/assets/logo-persegi.png" alt="Logo" class="w-full h-auto object-contain drop-shadow-lg" />
