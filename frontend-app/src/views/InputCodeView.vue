@@ -7,7 +7,7 @@
     </div>
 
     <!-- Main Card matching reference style but with brown palette -->
-    <div class="w-[85%] max-w-[320px] space-y-8 bg-[#4B2E2A] text-[#F7F2EC] p-8 rounded-3xl border border-[#B98B6A] shadow-[8px_8px_0px_#7A4A3A] relative z-10">
+    <div class="w-[85%] max-w-[320px] space-y-8 bg-[#B98B6A] text-[#4B2E2A] p-8 rounded-3xl border-2 border-[#7A4A3A] shadow-[8px_8px_0px_#4B2E2A] relative z-10">
       
       <!-- Header Section -->
       <div class="text-center space-y-3">
@@ -56,7 +56,7 @@
           <button 
             type="submit" 
             :disabled="isLoading || inputCode.length < 3"
-            class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-bold rounded-xl text-white bg-primary hover:bg-[#7A4A3A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:cursor-not-allowed shadow-md"
+            class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-bold rounded-xl text-[#F7F2EC] bg-[#4B2E2A] hover:bg-[#7A4A3A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4B2E2A] transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:cursor-not-allowed shadow-md"
           >
             <span v-if="isLoading" class="absolute left-0 inset-y-0 flex items-center pl-6">
               <!-- SVG Spinner -->
