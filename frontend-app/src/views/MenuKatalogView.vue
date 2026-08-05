@@ -31,9 +31,23 @@
     </header>
 
     <main class="p-6 space-y-6">
-      <div v-if="isLoading" class="text-center py-16">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-primary mx-auto"></div>
-        <p class="text-textColor/70 mt-6 text-base font-bold animate-pulse tracking-wide">Menyiapkan hidangan terbaik...</p>
+      <div v-if="isLoading" class="space-y-12 w-full">
+        <div v-for="i in 2" :key="i" class="animate-pulse">
+          <div class="h-8 bg-[#B98B6A]/30 rounded-full w-1/3 mb-6"></div>
+          <div class="space-y-4">
+            <div v-for="j in 3" :key="j" class="bg-[#F7F2EC] rounded-3xl p-5 shadow-sm border border-[#B98B6A]/10 flex gap-5 items-center">
+              <div class="w-28 h-28 flex-shrink-0 bg-[#E9D8C6] rounded-2xl"></div>
+              <div class="flex-1 space-y-3">
+                <div class="h-6 bg-[#E9D8C6] rounded-full w-3/4"></div>
+                <div class="h-4 bg-[#E9D8C6] rounded-full w-full"></div>
+                <div class="mt-4 flex justify-between items-center pt-2">
+                  <div class="h-6 bg-[#E9D8C6] rounded-full w-1/4"></div>
+                  <div class="h-10 bg-[#B98B6A]/20 rounded-xl w-24"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div v-else-if="menus.length === 0" class="text-center py-16 bg-card rounded-3xl border-2 border-primary/10 shadow-lg">
@@ -172,7 +186,7 @@
 
     <!-- Customer Info Modal -->
     <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
-      <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6">
+      <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6 animate-fade-up">
         
         <div class="text-center space-y-2">
           <h3 class="text-2xl font-extrabold text-[#4B2E2A] font-heading uppercase">Data Pemesan</h3>

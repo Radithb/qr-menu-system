@@ -74,8 +74,31 @@
           </div>
         </header>
 
+        <!-- Loading State -->
+        <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div v-for="i in 6" :key="'skel-'+i" class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col min-h-[250px] animate-pulse">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-full">
+                <div class="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                <div class="h-6 bg-gray-300 rounded w-1/2 mb-2"></div>
+                <div class="h-4 bg-gray-200 rounded w-1/3"></div>
+              </div>
+            </div>
+            <div class="flex-1 bg-gray-50 rounded-2xl p-4 space-y-3 mb-6">
+              <div v-for="j in 2" :key="'skel-item-'+j" class="flex justify-between">
+                <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+              </div>
+            </div>
+            <div class="flex justify-between items-center mt-auto border-t border-gray-100 pt-4">
+              <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+              <div class="h-8 bg-gray-200 rounded-xl w-24"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Empty State -->
-        <div v-if="(currentTab === 'active' && orders.length === 0) || (currentTab === 'history' && historyOrders.length === 0)" class="bg-white border-2 border-dashed border-gray-200 rounded-3xl p-16 flex flex-col items-center justify-center text-center">
+        <div v-else-if="(currentTab === 'active' && orders.length === 0) || (currentTab === 'history' && historyOrders.length === 0)" class="bg-white border-2 border-dashed border-gray-200 rounded-3xl p-16 flex flex-col items-center justify-center text-center">
           <svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
           </svg>
@@ -149,6 +172,7 @@ const orders = ref([]);
 const historyOrders = ref([]);
 const outletId = ref(1); // Default simulasi ID outlet 1
 const isConnected = ref(false);
+const isLoading = ref(true);
 let echoInstance = null;
 
 const formatPrice = (price) => {
@@ -185,6 +209,7 @@ const connectWebSocket = () => {
 };
 
 const fetchOrders = async () => {
+  isLoading.value = true;
   try {
     const response = await axios.get(`http://localhost:8000/api/outlets/${outletId.value}/orders`);
     if (response.data.success) {
@@ -192,6 +217,8 @@ const fetchOrders = async () => {
     }
   } catch (error) {
     console.error('Gagal mengambil data pesanan', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -207,6 +234,7 @@ onUnmounted(() => {
 });
 
 const fetchHistoryOrders = async () => {
+  isLoading.value = true;
   try {
     const response = await axios.get(`http://localhost:8000/api/outlets/${outletId.value}/orders/history`);
     if (response.data.success) {
@@ -214,6 +242,8 @@ const fetchHistoryOrders = async () => {
     }
   } catch (error) {
     console.error('Gagal mengambil data riwayat pesanan', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 

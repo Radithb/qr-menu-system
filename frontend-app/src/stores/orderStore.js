@@ -5,14 +5,12 @@ export const useOrderStore = defineStore('order', () => {
     const kodeOutlet = ref(null);
     const nomorMeja = ref(null);
     const outletData = ref(null);
-    const customerName = ref(localStorage.getItem('customer_name') || '');
-    const customerEmail = ref(localStorage.getItem('customer_email') || '');
+    const customerName = ref('');
+    const customerEmail = ref('');
 
     function resetCustomerData() {
         customerName.value = '';
         customerEmail.value = '';
-        localStorage.removeItem('customer_name');
-        localStorage.removeItem('customer_email');
     }
 
     function setOutletData(kode, data) {
@@ -28,8 +26,6 @@ export const useOrderStore = defineStore('order', () => {
     function setCustomerData(name, email) {
         customerName.value = name;
         customerEmail.value = email;
-        localStorage.setItem('customer_name', name);
-        localStorage.setItem('customer_email', email);
     }
 
     function clearData() {
@@ -38,8 +34,6 @@ export const useOrderStore = defineStore('order', () => {
         outletData.value = null;
         customerName.value = '';
         customerEmail.value = '';
-        localStorage.removeItem('customer_name');
-        localStorage.removeItem('customer_email');
     }
 
     return { 
