@@ -13,7 +13,35 @@
     </header>
 
     <main class="p-6 space-y-6">
-      <div v-if="cartStore.items.length === 0" class="text-center py-16 bg-[#F7F2EC] rounded-3xl border border-[#B98B6A]/20 shadow-lg">
+      <!-- Skeleton Loading State -->
+      <div v-if="isLoading" class="space-y-6 animate-pulse">
+        <!-- Item List Skeleton -->
+        <div class="bg-[#F7F2EC] rounded-3xl p-5 border border-[#B98B6A]/20 space-y-5">
+          <div v-for="i in 3" :key="i" class="flex items-center justify-between pb-4 border-b border-[#B98B6A]/10 last:border-0 last:pb-0">
+            <div class="flex-1 space-y-2 pr-4">
+              <div class="h-4 bg-[#B98B6A]/20 rounded-md w-3/4"></div>
+              <div class="h-3 bg-[#B98B6A]/15 rounded-md w-1/2"></div>
+            </div>
+            <div class="w-24 h-9 bg-[#B98B6A]/20 rounded-xl"></div>
+          </div>
+        </div>
+
+        <!-- Summary Skeleton -->
+        <div class="bg-[#F7F2EC] rounded-3xl p-5 border border-[#B98B6A]/20 space-y-3">
+          <div class="h-5 bg-[#B98B6A]/20 rounded-md w-1/3 mb-4"></div>
+          <div class="flex justify-between items-center">
+            <div class="h-4 bg-[#B98B6A]/15 rounded-md w-24"></div>
+            <div class="h-4 bg-[#B98B6A]/20 rounded-md w-8"></div>
+          </div>
+          <div class="flex justify-between items-center pt-2">
+            <div class="h-5 bg-[#B98B6A]/20 rounded-md w-28"></div>
+            <div class="h-6 bg-[#B98B6A]/30 rounded-md w-32"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty Cart State -->
+      <div v-else-if="cartStore.items.length === 0" class="text-center py-16 bg-[#F7F2EC] rounded-3xl border border-[#B98B6A]/20 shadow-lg">
         <p class="text-[#4B2E2A]/70 text-base font-medium">Keranjang belanja Anda masih kosong.</p>
         <button 
           @click="router.push({name: 'MenuKatalog'})" 
@@ -67,7 +95,7 @@
     </main>
 
     <transition name="slide-up">
-      <div v-if="cartStore.items.length > 0" class="fixed bottom-16 left-0 right-0 p-6 bg-[#E9D8C6]/90 backdrop-blur-lg border-t-2 border-[#B98B6A]/30 z-20">
+      <div v-if="!isLoading && cartStore.items.length > 0" class="fixed bottom-16 left-0 right-0 p-6 bg-[#E9D8C6]/90 backdrop-blur-lg border-t-2 border-[#B98B6A]/30 z-20">
         <button 
           @click="checkout"
           :disabled="isSubmitting"
@@ -123,11 +151,17 @@ const orderStore = useOrderStore();
 
 const isSubmitting = ref(false);
 const orderSuccess = ref(false);
+const isLoading = ref(true);
 
 onMounted(() => {
   if (!orderStore.outletData?.id) {
     router.push('/');
+    return;
   }
+  
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 400);
 });
 
 const formatPrice = (price) => {
