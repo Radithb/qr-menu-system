@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-screen bg-background pb-48 font-sans relative">
+  <div 
+    class="min-h-screen pb-48 font-sans relative bg-cover bg-center bg-no-repeat bg-fixed"
+    :style="{ backgroundImage: `url(${bgDashboard})` }"
+  >
     
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 pt-5 pb-3 flex justify-between items-center">
@@ -197,69 +200,7 @@
 
 
 
-    <!-- Customer Info Modal -->
-    <transition name="modal-fade">
-      <div v-if="showCustomerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4B2E2A]/60 backdrop-blur-sm">
-        <div class="bg-[#F7F2EC] max-w-md w-full p-8 rounded-3xl shadow-2xl border-2 border-[#B98B6A]/30 space-y-6 modal-box">
-          
-          <div class="text-center space-y-2">
-          <h3 class="text-2xl font-extrabold text-[#4B2E2A] font-heading uppercase">Data Pemesan</h3>
-          <p class="text-sm text-[#4B2E2A]/80 font-medium leading-relaxed">
-            Silakan masukkan nama dan email Anda agar kasir dapat memproses pesanan Anda.
-          </p>
-        </div>
-
-        <form @submit.prevent="submitCustomerInfo" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Nama Lengkap</label>
-            <input 
-              v-model="customerName" 
-              type="text" 
-              required 
-              placeholder="Contoh: Radith" 
-              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
-            />
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-[#4B2E2A] mb-2">Email</label>
-            <input 
-              v-model="customerEmail" 
-              type="email" 
-              required 
-              placeholder="Contoh: radith@example.com" 
-              class="w-full px-5 py-3.5 rounded-xl border-2 border-[#B98B6A]/30 bg-white text-[#4B2E2A] font-bold focus:outline-none focus:border-[#B98B6A]"
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            class="w-full mt-4 bg-[#B98B6A] hover:bg-[#7A4A3A] text-white py-4 rounded-xl font-bold uppercase tracking-wider shadow-lg active:scale-95 transition-all"
-          >
-            Mulai Memesan
-          </button>
-        </form>
-
-      </div>
-    </div>
-    </transition>
-
-    <!-- Flying Dots Animation -->
-    <div 
-      v-for="dot in flyingDots" 
-      :key="dot.id"
-      class="fixed z-[100] pointer-events-none dot-container top-0 left-0"
-      :style="{
-        '--startX': `${dot.startX}px`,
-        '--startY': `${dot.startY}px`,
-        '--endX': `${dot.endX}px`,
-        '--endY': `${dot.endY}px`,
-      }"
-    >
-      <div class="w-4 h-4 bg-[#4B2E2A] rounded-full shadow-md dot-element"></div>
-    </div>
-
-    <BottomNav v-if="!selectedMenu && !showCustomerModal" />
+    <BottomNav v-if="!selectedMenu" />
   </div>
 </template>
 
@@ -270,6 +211,7 @@ import { useOrderStore } from '@/stores/orderStore';
 import { useCartStore } from '@/stores/cartStore';
 import axios from 'axios';
 import BottomNav from '@/components/BottomNav.vue';
+import bgDashboard from '@/assets/bgdashboard.jpg';
 
 const router = useRouter();
 const orderStore = useOrderStore();
@@ -436,10 +378,6 @@ onMounted(async () => {
   if (!orderStore.outletData?.id) {
     router.push('/');
     return;
-  }
-  
-  if (!orderStore.customerName || !orderStore.customerEmail) {
-    showCustomerModal.value = true;
   }
   
   await fetchMenus();

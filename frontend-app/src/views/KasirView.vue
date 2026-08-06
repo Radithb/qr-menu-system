@@ -66,7 +66,7 @@
               class="p-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold transition-all shadow-sm border border-gray-200 flex items-center gap-1 text-sm"
               title="Refresh Pesanan"
             >
-              🔄 <span class="hidden sm:inline">Refresh</span>
+              <img src="@/assets/refresh.png" alt="Refresh" class="w-4 h-4 object-contain inline-block" /> <span class="hidden sm:inline">Refresh</span>
             </button>
           </div>
           
@@ -126,8 +126,8 @@
               <div>
                 <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Order #{{ order.id }}</span>
                 <h3 class="text-2xl font-extrabold text-gray-900 mt-1">Meja {{ order.nomor_meja }}</h3>
-                <p v-if="order.customer_name" class="text-sm font-bold text-[#7A4A3A] mt-1 flex items-center gap-1">
-                  <span>👤</span> {{ order.customer_name }}
+                <p v-if="order.customer_name" class="text-sm font-bold text-[#7A4A3A] mt-1 flex items-center gap-1.5">
+                  <img src="@/assets/people.png" alt="Pelanggan" class="w-4 h-4 object-contain inline-block" /> {{ order.customer_name }}
                   <span v-if="order.customer_email" class="text-xs text-gray-500 font-normal ml-1">({{ order.customer_email }})</span>
                 </p>
               </div>
