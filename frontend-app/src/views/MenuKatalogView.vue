@@ -4,10 +4,10 @@
     :style="{ backgroundImage: `url(${bgDashboard})` }"
   >
     
-    <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-10 border-b-2 border-[#B98B6A]/30">
+    <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-30 border-b-2 border-[#B98B6A]/30">
       <div class="px-6 pt-5 pb-3 flex justify-between items-center">
         <div>
-          <img src="@/assets/logo-panjang.png" alt="Logo" class="h-24 sm:h-12 w-auto object-contain mb-1" />
+          <img src="@/assets/logonga.png" alt="Logo" class="h-24 sm:h-12 w-auto object-contain mb-1" />
         </div>
       </div>
       
@@ -38,21 +38,30 @@
       </div>
       
       <!-- Category Tabs -->
-      <div v-if="categories.length > 0" class="flex overflow-x-auto hide-scrollbar px-6 pb-4 pt-1 gap-3 snap-x">
+      <div 
+        ref="categoryTabsRef"
+        v-if="categories.length > 0" 
+        class="flex overflow-x-auto hide-scrollbar px-6 pb-4 pt-1 gap-3 cursor-grab active:cursor-grabbing select-none touch-pan-x"
+        @wheel.prevent="handleTabWheel"
+        @mousedown="startDrag"
+        @mouseleave="stopDrag"
+        @mouseup="stopDrag"
+        @mousemove="onDrag"
+      >
         <button 
           v-for="cat in categories" 
           :key="cat"
           :id="'tab-' + cat"
-          @click="scrollToCategory(cat)"
-          :class="activeCategory === cat ? 'bg-[#4B2E2A] text-white shadow-md scale-105' : 'bg-transparent text-[#4B2E2A]/80 border border-[#4B2E2A]/30 hover:bg-[#4B2E2A]/10'"
-          class="px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-all snap-start"
+          @click="handleTabClick(cat)"
+          :class="activeCategory === cat ? 'bg-[#4B2E2A] text-white shadow-md' : 'bg-transparent text-[#4B2E2A]/80 border border-[#4B2E2A]/30 hover:bg-[#4B2E2A]/10'"
+          class="px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap transition-colors flex-shrink-0"
         >
           {{ cat }}
         </button>
       </div>
     </header>
 
-    <main class="p-6 space-y-6">
+    <main class="p-6 space-y-6 relative z-10">
       <div v-if="isLoading" class="space-y-12 w-full">
         <div v-for="i in 2" :key="i" class="animate-pulse">
           <div class="h-8 bg-[#B98B6A]/30 rounded-full w-1/3 mb-6"></div>
@@ -200,6 +209,11 @@
 
 
 
+    <!-- Pintu Graphic (Fixed at bottom right behind menu cards, in front of background layer) -->
+    <div class="fixed bottom-0 right-0 w-[500px] sm:w-[650px] z-0 pointer-events-none opacity-90">
+      <img src="@/assets/rhpintu.PNG" alt="Pintu Graphic" class="w-full h-auto object-contain drop-shadow-md" />
+    </div>
+
     <BottomNav v-if="!selectedMenu" />
   </div>
 </template>
@@ -220,6 +234,76 @@ const cartStore = useCartStore();
 const menus = ref([]);
 const isLoading = ref(true);
 const searchQuery = ref('');
+
+const categoryTabsRef = ref(null);
+let isDraggingTabs = false;
+let startX = 0;
+let scrollLeftStart = 0;
+let dragMoved = false;
+let velocity = 0;
+let lastX = 0;
+let lastTime = 0;
+let animationFrameId = null;
+
+const handleTabWheel = (e) => {
+  if (categoryTabsRef.value) {
+    categoryTabsRef.value.scrollLeft += e.deltaY * 1.2;
+  }
+};
+
+const startDrag = (e) => {
+  if (!categoryTabsRef.value) return;
+  if (animationFrameId) cancelAnimationFrame(animationFrameId);
+  isDraggingTabs = true;
+  dragMoved = false;
+  startX = e.pageX - categoryTabsRef.value.offsetLeft;
+  scrollLeftStart = categoryTabsRef.value.scrollLeft;
+  lastX = e.pageX;
+  lastTime = performance.now();
+  velocity = 0;
+};
+
+const stopDrag = () => {
+  if (!isDraggingTabs) return;
+  isDraggingTabs = false;
+  
+  // Inertia glide momentum
+  if (Math.abs(velocity) > 0.08 && categoryTabsRef.value) {
+    const momentumScroll = () => {
+      if (Math.abs(velocity) < 0.02 || !categoryTabsRef.value) return;
+      categoryTabsRef.value.scrollLeft -= velocity * 14;
+      velocity *= 0.91; // friction decay
+      animationFrameId = requestAnimationFrame(momentumScroll);
+    };
+    animationFrameId = requestAnimationFrame(momentumScroll);
+  }
+};
+
+const onDrag = (e) => {
+  if (!isDraggingTabs || !categoryTabsRef.value) return;
+  const now = performance.now();
+  const dt = now - lastTime;
+  const currentX = e.pageX;
+  
+  if (dt > 0) {
+    velocity = (currentX - lastX) / dt;
+  }
+  lastX = currentX;
+  lastTime = now;
+
+  const x = currentX - categoryTabsRef.value.offsetLeft;
+  const walk = (x - startX);
+  if (Math.abs(walk) > 3) {
+    dragMoved = true;
+  }
+  categoryTabsRef.value.scrollLeft = scrollLeftStart - walk;
+};
+
+const handleTabClick = (cat) => {
+  if (!dragMoved) {
+    scrollToCategory(cat);
+  }
+};
 
 const showCustomerModal = ref(false);
 const customerName = ref(orderStore.customerName || '');
