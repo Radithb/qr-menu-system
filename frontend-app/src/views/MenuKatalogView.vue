@@ -5,9 +5,9 @@
   >
     
     <header class="bg-[#E9D8C6] shadow-sm sticky top-0 z-30 border-b-2 border-[#B98B6A]/30">
-      <div class="px-6 pt-5 pb-3 flex justify-between items-center">
+      <div class="px-6 pt-4 pb-2 flex justify-between items-center">
         <div>
-          <img src="@/assets/logonga.png" alt="Logo" class="h-24 sm:h-12 w-auto object-contain mb-1" />
+          <img src="@/assets/logonga.png" alt="Logo" class="h-24 sm:h-16 w-auto object-contain" />
         </div>
       </div>
       
@@ -64,15 +64,24 @@
     <main class="p-6 space-y-6 relative z-10">
       <div v-if="isLoading" class="space-y-12 w-full">
         <div v-for="i in 2" :key="i" class="animate-pulse">
-          <div class="h-8 bg-[#B98B6A]/30 rounded-full w-1/3 mb-6"></div>
+          <!-- Category Title Skeleton -->
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-2 h-8 bg-[#B98B6A]/30 rounded-full"></div>
+            <div class="h-6 bg-[#B98B6A]/30 rounded-full w-32"></div>
+          </div>
+          
           <div class="space-y-4">
-            <div v-for="j in 3" :key="j" class="bg-[#F7F2EC] rounded-3xl p-5 shadow-sm border border-[#B98B6A]/10 flex gap-5 items-center">
-              <div class="w-28 h-28 flex-shrink-0 bg-[#E9D8C6] rounded-2xl"></div>
-              <div class="flex-1 space-y-3">
-                <div class="h-6 bg-[#E9D8C6] rounded-full w-3/4"></div>
+            <div v-for="j in 3" :key="j" class="bg-[#F7F2EC]/80 rounded-3xl p-5 shadow-sm border border-[#B98B6A]/20 flex gap-5 items-center">
+              <!-- Image Skeleton -->
+              <div class="w-28 h-28 flex-shrink-0 bg-[#E9D8C6] rounded-2xl border border-[#B98B6A]/20"></div>
+              
+              <!-- Content Skeleton -->
+              <div class="flex-1">
+                <div class="h-6 bg-[#E9D8C6] rounded-full w-3/4 mb-3"></div>
                 <div class="h-4 bg-[#E9D8C6] rounded-full w-full"></div>
-                <div class="mt-4 flex justify-between items-center pt-2">
-                  <div class="h-6 bg-[#E9D8C6] rounded-full w-1/4"></div>
+                
+                <div class="mt-6 flex justify-between items-center">
+                  <div class="h-6 bg-[#E9D8C6] rounded-full w-1/3"></div>
                   <div class="h-10 bg-[#B98B6A]/20 rounded-xl w-24"></div>
                 </div>
               </div>
@@ -212,6 +221,27 @@
     <!-- Pintu Graphic (Fixed at bottom right behind menu cards, in front of background layer) -->
     <div class="fixed bottom-0 right-0 w-[500px] sm:w-[650px] z-0 pointer-events-none opacity-90">
       <img src="@/assets/rhpintu.PNG" alt="Pintu Graphic" class="w-full h-auto object-contain drop-shadow-md" />
+    </div>
+
+    <!-- Flying Dots Animation -->
+    <div 
+      v-for="dot in flyingDots" 
+      :key="dot.id"
+      class="fixed z-[100] pointer-events-none dot-container"
+      :style="{
+        '--startX': `${dot.startX}px`,
+        '--endX': `${dot.endX}px`,
+        top: 0,
+        left: 0
+      }"
+    >
+      <div 
+        class="w-6 h-6 rounded-full dot-element flex items-center justify-center text-white text-[10px] font-bold shadow-lg"
+        :style="{
+          '--startY': `${dot.startY}px`,
+          '--endY': `${dot.endY}px`
+        }"
+      >+1</div>
     </div>
 
     <BottomNav v-if="!selectedMenu" />
