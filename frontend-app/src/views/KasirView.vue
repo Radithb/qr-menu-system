@@ -406,8 +406,16 @@
               </div>
             </div>
 
-            <!-- Summary Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Summary Stats Cards (Skeleton Loading) -->
+            <div v-if="isTxLoading" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div v-for="i in 3" :key="'stat-skel-'+i" class="bg-[#F7F2EC]/95 rounded-2xl p-5 border border-[#B98B6A]/20 shadow-sm animate-pulse">
+                <div class="h-3.5 bg-[#B98B6A]/25 rounded w-1/3 mb-2.5"></div>
+                <div class="h-8 bg-[#B98B6A]/30 rounded w-2/3"></div>
+              </div>
+            </div>
+
+            <!-- Summary Stats Cards (Actual) -->
+            <div v-else class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div class="bg-[#F7F2EC]/95 rounded-2xl p-5 border border-[#B98B6A]/20 shadow-sm backdrop-blur-sm">
                 <p class="text-[10px] font-bold text-[#7A4A3A] uppercase tracking-wider">Total Pendapatan</p>
                 <p class="text-2xl font-extrabold text-[#4B2E2A] mt-1">Rp {{ formatPrice(txSummary.total_revenue) }}</p>
@@ -422,11 +430,48 @@
               </div>
             </div>
 
-            <!-- Loading -->
-            <div v-if="isTxLoading" class="text-center py-16">
-              <div class="inline-flex items-center gap-3 bg-[#F7F2EC] px-6 py-3 rounded-2xl border border-[#B98B6A]/20 shadow-sm">
-                <svg class="w-5 h-5 animate-spin text-[#B98B6A]" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                <span class="text-sm font-bold text-[#4B2E2A]">Memuat data riwayat...</span>
+            <!-- Loading Table Skeleton -->
+            <div v-if="isTxLoading" class="bg-[#F7F2EC]/95 rounded-2xl border border-[#B98B6A]/20 shadow-sm backdrop-blur-sm overflow-hidden animate-pulse">
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="bg-[#4B2E2A] text-white">
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">No. Order</th>
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">Hari / Tanggal</th>
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">Waktu</th>
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">Meja</th>
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">Pelanggan</th>
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">Metode</th>
+                      <th class="text-left px-4 py-3 font-bold text-xs uppercase tracking-wider">Item</th>
+                      <th class="text-right px-4 py-3 font-bold text-xs uppercase tracking-wider">Total</th>
+                      <th class="text-center px-4 py-3 font-bold text-xs uppercase tracking-wider">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="i in 5" :key="'tx-skel-'+i" class="border-b border-[#B98B6A]/10">
+                      <td class="px-4 py-3.5"><div class="h-4 bg-[#B98B6A]/25 rounded w-10"></div></td>
+                      <td class="px-4 py-3.5 space-y-1.5">
+                        <div class="h-4 bg-[#B98B6A]/30 rounded w-16"></div>
+                        <div class="h-3 bg-[#B98B6A]/20 rounded w-24"></div>
+                      </td>
+                      <td class="px-4 py-3.5"><div class="h-4 bg-[#B98B6A]/25 rounded w-12"></div></td>
+                      <td class="px-4 py-3.5"><div class="h-6 bg-[#B98B6A]/20 rounded-lg w-8"></div></td>
+                      <td class="px-4 py-3.5 space-y-1.5">
+                        <div class="h-4 bg-[#B98B6A]/30 rounded w-24"></div>
+                        <div class="h-3 bg-[#B98B6A]/15 rounded w-32"></div>
+                      </td>
+                      <td class="px-4 py-3.5"><div class="h-6 bg-[#B98B6A]/20 rounded-lg w-14"></div></td>
+                      <td class="px-4 py-3.5"><div class="h-4 bg-[#B98B6A]/25 rounded w-12"></div></td>
+                      <td class="px-4 py-3.5 text-right"><div class="h-4 bg-[#B98B6A]/30 rounded w-20 ml-auto"></div></td>
+                      <td class="px-4 py-3.5 text-center">
+                        <div class="flex items-center justify-center gap-1">
+                          <div class="w-7 h-7 bg-[#B98B6A]/20 rounded-lg"></div>
+                          <div class="w-7 h-7 bg-[#B98B6A]/20 rounded-lg"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
