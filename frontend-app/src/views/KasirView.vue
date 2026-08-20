@@ -22,12 +22,19 @@
 
     <!-- Sidebar Kasir -->
     <aside class="w-80 bg-[#E9D8C6]/95 border-r border-[#B98B6A]/30 flex flex-col h-screen sticky top-0 shadow-lg backdrop-blur-sm z-20 no-print">
-      <div class="p-6 border-b border-[#B98B6A]/20 text-[#4B2E2A]">
-        <h1 class="text-2xl font-extrabold font-heading tracking-wider uppercase flex items-center gap-2">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-          Kasir
-        </h1>
-        <p class="text-xs font-bold uppercase tracking-widest mt-2 opacity-70">Kopi Ruang Hati</p>
+      <div class="p-6 border-b border-[#B98B6A]/20">
+        <div class="flex flex-col gap-3">
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-3.5 border border-[#B98B6A]/25 shadow-sm flex items-center justify-center">
+            <img src="@/assets/logo-panjang.png" alt="Kopi Ruang Hati" class="h-11 w-auto object-contain mix-blend-multiply drop-shadow-sm" />
+          </div>
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#7A4A3A]">POS Kasir</span>
+            </div>
+            <span class="text-[10px] font-bold text-[#7A4A3A]/70 bg-[#B98B6A]/15 px-2 py-0.5 rounded-md">Online</span>
+          </div>
+        </div>
       </div>
       
       <div class="p-6 flex-1 overflow-y-auto space-y-5">
