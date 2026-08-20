@@ -308,16 +308,23 @@
               <div class="flex flex-col sm:flex-row gap-4 mb-4 border-b border-[#B98B6A]/20 pb-4">
                 <div class="flex items-center gap-2">
                   <label class="text-[10px] font-bold text-[#7A4A3A] uppercase tracking-wider">Mode Rentang:</label>
-                  <select 
-                    v-model="periodMode" 
-                    @change="onPeriodModeChange"
-                    class="bg-white border border-[#B98B6A]/30 rounded-xl px-3 py-1.5 text-xs font-bold text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 appearance-none cursor-pointer"
-                  >
-                    <option value="daily">Harian</option>
-                    <option value="weekly">Mingguan</option>
-                    <option value="monthly">Bulanan</option>
-                    <option value="custom">Kustom</option>
-                  </select>
+                  <div class="relative">
+                    <select 
+                      v-model="periodMode" 
+                      @change="onPeriodModeChange"
+                      class="bg-white border border-[#B98B6A]/30 rounded-xl pl-3 pr-8 py-1.5 text-xs font-bold text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 appearance-none cursor-pointer"
+                    >
+                      <option value="daily">Harian</option>
+                      <option value="weekly">Mingguan</option>
+                      <option value="monthly">Bulanan</option>
+                      <option value="custom">Kustom</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-[#7A4A3A]">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                    </div>
+                  </div>
                 </div>
                 
                 <div v-if="periodMode !== 'custom'" class="flex items-center bg-white border border-[#B98B6A]/30 rounded-xl overflow-hidden shadow-sm">
@@ -355,14 +362,21 @@
                 <!-- Payment Method -->
                 <div class="flex-1 min-w-[140px]">
                   <label class="block text-[10px] font-bold text-[#7A4A3A] uppercase tracking-wider mb-1.5">Metode Bayar</label>
-                  <select 
-                    v-model="txFilter.paymentMethod" 
-                    class="w-full bg-white border border-[#B98B6A]/30 rounded-xl px-3 py-2 text-sm text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 appearance-none cursor-pointer"
-                  >
-                    <option value="">Semua Metode</option>
-                    <option value="QRIS">QRIS</option>
-                    <option value="Kasir / Tunai">Tunai</option>
-                  </select>
+                  <div class="relative">
+                    <select 
+                      v-model="txFilter.paymentMethod" 
+                      class="w-full bg-white border border-[#B98B6A]/30 rounded-xl pl-3 pr-8 py-2 text-sm text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 appearance-none cursor-pointer"
+                    >
+                      <option value="">Semua Metode</option>
+                      <option value="QRIS">QRIS</option>
+                      <option value="Kasir / Tunai">Tunai</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-[#7A4A3A]">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                    </div>
+                  </div>
                 </div>
                 <!-- Search -->
                 <div class="flex-[2] min-w-[200px]">
@@ -557,13 +571,20 @@
             </div>
             <div class="flex gap-3 items-center">
               <!-- Category Filter -->
-              <select 
-                v-model="menuCategoryFilter"
-                class="bg-[#F7F2EC] border border-[#B98B6A]/30 rounded-xl px-4 py-2 text-sm font-bold text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 appearance-none cursor-pointer"
-              >
-                <option value="">Semua Kategori ({{ menuItems.length }})</option>
-                <option v-for="cat in availableCategories" :key="cat" :value="cat">{{ cat }}</option>
-              </select>
+              <div class="relative">
+                <select 
+                  v-model="menuCategoryFilter"
+                  class="bg-[#F7F2EC] border border-[#B98B6A]/30 rounded-xl pl-4 pr-9 py-2 text-sm font-bold text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 appearance-none cursor-pointer"
+                >
+                  <option value="">Semua Kategori ({{ menuItems.length }})</option>
+                  <option v-for="cat in availableCategories" :key="cat" :value="cat">{{ cat }}</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-[#7A4A3A]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+              </div>
 
               <button 
                 @click="fetchMenuItems()"
