@@ -122,8 +122,8 @@
         </header>
 
         <!-- Scrollable Main Content -->
-        <main class="flex-1 p-8 overflow-y-auto no-print">
-          <div class="max-w-6xl mx-auto">
+        <main class="flex-1 p-8 overflow-y-auto no-print relative">
+          <div class="max-w-6xl mx-auto relative z-10">
             
             <!-- Loading State -->
             <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -274,6 +274,15 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- Decorative Love Graphic (Bottom Right) -->
+          <div class="fixed bottom-0 right-0 w-72 sm:w-88 md:w-96 pointer-events-none z-0 select-none overflow-hidden flex justify-end items-end">
+            <img 
+              src="@/assets/loveg.png" 
+              alt="Love Graphic" 
+              class="w-full h-auto object-contain drop-shadow-sm opacity-85 mix-blend-screen" 
+            />
           </div>
         </main>
       </template>
