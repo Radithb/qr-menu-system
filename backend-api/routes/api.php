@@ -33,5 +33,6 @@ Route::get('/transactions/history', [OrderController::class, 'transactionHistory
 // Menu CRUD
 Route::get('/menus', [MenuController::class, 'index']);
 Route::post('/menus', [MenuController::class, 'store']);
+Route::post('/menus/{id}', [MenuController::class, 'update']);
 Route::put('/menus/{id}', [MenuController::class, 'update']);
 Route::delete('/menus/{id}', [MenuController::class, 'destroy']);

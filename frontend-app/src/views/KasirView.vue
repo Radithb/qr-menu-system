@@ -808,10 +808,63 @@
             <textarea v-model="menuForm.description" rows="2" placeholder="Deskripsi singkat menu..." class="w-full bg-white border border-[#B98B6A]/30 rounded-xl px-4 py-2.5 text-sm text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 placeholder-[#B98B6A]/50 resize-none"></textarea>
           </div>
 
-          <!-- URL Gambar -->
+          <!-- Foto / Gambar Menu -->
           <div>
-            <label class="block text-xs font-bold text-[#4B2E2A] mb-1.5 uppercase tracking-wider">URL Gambar</label>
-            <input v-model="menuForm.image_url" type="text" placeholder="https://..." class="w-full bg-white border border-[#B98B6A]/30 rounded-xl px-4 py-2.5 text-sm text-[#4B2E2A] focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 placeholder-[#B98B6A]/50" />
+            <label class="block text-xs font-bold text-[#4B2E2A] mb-1.5 uppercase tracking-wider">Foto Menu</label>
+            <div class="flex items-start gap-4 p-3.5 bg-white border border-[#B98B6A]/30 rounded-2xl">
+              <!-- Thumbnail Preview Box -->
+              <div class="w-24 h-24 rounded-xl bg-[#F7F2EC] border border-[#B98B6A]/30 overflow-hidden flex-shrink-0 flex items-center justify-center relative shadow-inner">
+                <img 
+                  v-if="imagePreviewUrl" 
+                  :src="imagePreviewUrl" 
+                  alt="Preview" 
+                  class="w-full h-full object-cover" 
+                />
+                <div v-else class="text-center p-2 text-[#7A4A3A]/60">
+                  <svg class="w-7 h-7 mx-auto mb-1 text-[#B98B6A]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <span class="text-[10px] font-bold">Tanpa Foto</span>
+                </div>
+              </div>
+
+              <!-- Upload Actions -->
+              <div class="flex-1 space-y-2">
+                <input 
+                  type="file" 
+                  ref="fileInputRef" 
+                  accept="image/png, image/jpeg, image/jpg, image/webp" 
+                  class="hidden" 
+                  @change="handleFileSelected" 
+                />
+                
+                <div class="flex flex-wrap gap-2">
+                  <button 
+                    type="button"
+                    @click="triggerFileInput" 
+                    class="px-4 py-2 rounded-xl bg-[#4B2E2A] hover:bg-[#7A4A3A] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <span>{{ imagePreviewUrl ? 'Ganti Foto' : 'Pilih Foto' }}</span>
+                  </button>
+                  
+                  <button 
+                    v-if="imagePreviewUrl" 
+                    type="button"
+                    @click="removeSelectedImage" 
+                    class="px-3 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold transition-all cursor-pointer"
+                  >
+                    Hapus
+                  </button>
+                </div>
+                
+                <p class="text-[11px] text-[#7A4A3A]/70 leading-relaxed">
+                  Format: JPG, PNG, atau WebP (Maks. 5 MB). Gambar akan otomatis terupload ke server.
+                </p>
+              </div>
+            </div>
           </div>
 
           <!-- Variants / Add-ons Section -->
@@ -938,6 +991,9 @@ const menuCategoryFilter = ref('');
 const showMenuModal = ref(false);
 const isSavingMenu = ref(false);
 const menuForm = ref(getEmptyMenuForm());
+const fileInputRef = ref(null);
+const menuImageFile = ref(null);
+const imagePreviewUrl = ref('');
 
 // Delete Modal
 const showDeleteModal = ref(false);
@@ -1352,6 +1408,29 @@ const toggleTxExpand = (orderId) => {
 };
 
 // Menu Modal
+const triggerFileInput = () => {
+  fileInputRef.value?.click();
+};
+
+const handleFileSelected = (e) => {
+  const file = e.target.files?.[0];
+  if (file) {
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Ukuran file maksimal 5 MB!');
+      return;
+    }
+    menuImageFile.value = file;
+    imagePreviewUrl.value = URL.createObjectURL(file);
+  }
+};
+
+const removeSelectedImage = () => {
+  menuImageFile.value = null;
+  imagePreviewUrl.value = '';
+  menuForm.value.image_url = '';
+  if (fileInputRef.value) fileInputRef.value.value = '';
+};
+
 const openMenuModal = (menu) => {
   if (menu) {
     menuForm.value = {
@@ -1363,15 +1442,23 @@ const openMenuModal = (menu) => {
       image_url: menu.image_url || '',
       variants: menu.variants ? JSON.parse(JSON.stringify(menu.variants)) : []
     };
+    imagePreviewUrl.value = menu.image_url || '';
+    menuImageFile.value = null;
   } else {
     menuForm.value = getEmptyMenuForm();
+    imagePreviewUrl.value = '';
+    menuImageFile.value = null;
   }
+  if (fileInputRef.value) fileInputRef.value.value = '';
   showMenuModal.value = true;
 };
 
 const closeMenuModal = () => {
   showMenuModal.value = false;
   menuForm.value = getEmptyMenuForm();
+  imagePreviewUrl.value = '';
+  menuImageFile.value = null;
+  if (fileInputRef.value) fileInputRef.value.value = '';
 };
 
 const saveMenu = async () => {
@@ -1381,19 +1468,32 @@ const saveMenu = async () => {
   }
   isSavingMenu.value = true;
   try {
-    const payload = {
-      name: menuForm.value.name,
-      category: menuForm.value.category || null,
-      description: menuForm.value.description || null,
-      price: menuForm.value.price,
-      image_url: menuForm.value.image_url || null,
-      variants: menuForm.value.variants.length > 0 ? menuForm.value.variants : null,
+    const formData = new FormData();
+    formData.append('name', menuForm.value.name);
+    if (menuForm.value.category) formData.append('category', menuForm.value.category);
+    if (menuForm.value.description) formData.append('description', menuForm.value.description);
+    formData.append('price', menuForm.value.price);
+
+    if (menuImageFile.value) {
+      formData.append('image', menuImageFile.value);
+    } else if (menuForm.value.image_url) {
+      formData.append('image_url', menuForm.value.image_url);
+    } else {
+      formData.append('image_url', '');
+    }
+
+    if (menuForm.value.variants && menuForm.value.variants.length > 0) {
+      formData.append('variants', JSON.stringify(menuForm.value.variants));
+    }
+
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data' }
     };
 
     if (menuForm.value.id) {
-      await axios.put(`${API_BASE}/menus/${menuForm.value.id}`, payload);
+      await axios.post(`${API_BASE}/menus/${menuForm.value.id}`, formData, config);
     } else {
-      await axios.post(`${API_BASE}/menus`, payload);
+      await axios.post(`${API_BASE}/menus`, formData, config);
     }
     closeMenuModal();
     fetchMenuItems();

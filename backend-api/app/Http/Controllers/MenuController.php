@@ -43,9 +43,21 @@ class MenuController extends Controller
             'category' => 'nullable|string|max:100',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:5120',
             'image_url' => 'nullable|string|max:500',
-            'variants' => 'nullable|array',
+            'variants' => 'nullable',
         ]);
+
+        $imageUrl = $request->image_url;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menus', 'public');
+            $imageUrl = url('storage/' . $path);
+        }
+
+        $variants = $request->variants;
+        if (is_string($variants)) {
+            $variants = json_decode($variants, true);
+        }
 
         $menu = Menu::create([
             'outlet_id' => $request->outlet_id ?? 1,
@@ -53,8 +65,8 @@ class MenuController extends Controller
             'category' => $request->category,
             'description' => $request->description,
             'price' => $request->price,
-            'image_url' => $request->image_url,
-            'variants' => $request->variants,
+            'image_url' => $imageUrl,
+            'variants' => $variants,
         ]);
 
         return response()->json([
@@ -79,17 +91,31 @@ class MenuController extends Controller
             'category' => 'nullable|string|max:100',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:5120',
             'image_url' => 'nullable|string|max:500',
-            'variants' => 'nullable|array',
+            'variants' => 'nullable',
         ]);
+
+        $imageUrl = $menu->image_url;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menus', 'public');
+            $imageUrl = url('storage/' . $path);
+        } elseif ($request->has('image_url')) {
+            $imageUrl = $request->image_url;
+        }
+
+        $variants = $request->variants;
+        if (is_string($variants)) {
+            $variants = json_decode($variants, true);
+        }
 
         $menu->update([
             'name' => $request->name,
             'category' => $request->category,
             'description' => $request->description,
             'price' => $request->price,
-            'image_url' => $request->image_url,
-            'variants' => $request->variants,
+            'image_url' => $imageUrl,
+            'variants' => $variants,
         ]);
 
         return response()->json([
