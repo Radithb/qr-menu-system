@@ -194,15 +194,19 @@
                     <div class="flex-1 pr-2">
                       <span class="font-bold text-[#4B2E2A] text-sm">{{ item.quantity }}x {{ item.menu?.name || 'Item' }}</span>
                       <div v-if="item.options && Object.keys(item.options).length > 0" class="mt-1.5 flex flex-wrap gap-1">
-                        <span 
+                        <template 
                           v-for="(value, key) in (typeof item.options === 'string' ? JSON.parse(item.options) : item.options)" 
                           :key="key" 
-                          :class="key.toLowerCase() === 'catatan' ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold' : 'bg-[#B98B6A]/20 text-[#7A4A3A] font-bold'"
-                          class="text-[10px] px-2 py-0.5 rounded uppercase flex items-center gap-1"
                         >
-                          <svg v-if="key.toLowerCase() === 'catatan'" class="w-3 h-3 text-amber-700 inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                          <span>{{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
-                        </span>
+                          <span 
+                            v-if="hasOptionValue(value)"
+                            :class="key.toLowerCase() === 'catatan' ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold' : 'bg-[#B98B6A]/20 text-[#7A4A3A] font-bold'"
+                            class="text-[10px] px-2 py-0.5 rounded uppercase flex items-center gap-1"
+                          >
+                            <svg v-if="key.toLowerCase() === 'catatan'" class="w-3 h-3 text-amber-700 inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            <span>{{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
+                          </span>
+                        </template>
                       </div>
                     </div>
                     <span class="font-semibold text-[#7A4A3A] text-sm">Rp {{ formatPrice(item.subtotal) }}</span>
@@ -560,15 +564,19 @@
                                   <div class="flex-1 pr-3">
                                     <span class="font-bold text-[#4B2E2A]">{{ item.quantity }}x {{ item.menu?.name || 'Item' }}</span>
                                     <div v-if="item.options && Object.keys(typeof item.options === 'string' ? JSON.parse(item.options) : item.options).length > 0" class="flex flex-wrap gap-1 mt-1.5">
-                                      <span 
+                                      <template 
                                         v-for="(value, key) in (typeof item.options === 'string' ? JSON.parse(item.options) : item.options)" 
                                         :key="key" 
-                                        :class="key.toLowerCase() === 'catatan' ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold' : 'bg-[#B98B6A]/15 text-[#7A4A3A] font-bold'"
-                                        class="text-[10px] px-2 py-0.5 rounded flex items-center gap-1"
                                       >
-                                        <svg v-if="key.toLowerCase() === 'catatan'" class="w-3 h-3 text-amber-700 inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                        <span>{{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
-                                      </span>
+                                        <span 
+                                          v-if="hasOptionValue(value)"
+                                          :class="key.toLowerCase() === 'catatan' ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold' : 'bg-[#B98B6A]/15 text-[#7A4A3A] font-bold'"
+                                          class="text-[10px] px-2 py-0.5 rounded flex items-center gap-1"
+                                        >
+                                          <svg v-if="key.toLowerCase() === 'catatan'" class="w-3 h-3 text-amber-700 inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                          <span>{{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
+                                        </span>
+                                      </template>
                                     </div>
                                   </div>
                                   <span class="font-semibold text-[#7A4A3A] whitespace-nowrap">Rp {{ formatPrice(item.subtotal) }}</span>
@@ -797,7 +805,9 @@
                 <div class="flex justify-between items-start"><span class="font-bold text-gray-900 flex-1 pr-2">{{ item.menu?.name || 'Item' }}</span><span class="font-bold text-gray-900 text-right">Rp {{ formatPrice(item.subtotal) }}</span></div>
                 <div class="flex justify-between text-gray-500 text-[10px]"><span>{{ item.quantity }} x Rp {{ formatPrice(item.subtotal / item.quantity) }}</span></div>
                 <div v-if="item.options && Object.keys(item.options).length > 0" class="text-[10px] text-gray-500 pl-2 pt-0.5 italic">
-                  <span v-for="(value, key) in (typeof item.options === 'string' ? JSON.parse(item.options) : item.options)" :key="key" class="block">• {{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
+                  <template v-for="(value, key) in (typeof item.options === 'string' ? JSON.parse(item.options) : item.options)" :key="key">
+                    <span v-if="hasOptionValue(value)" class="block">• {{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
+                  </template>
                 </div>
               </div>
             </div>
@@ -1201,6 +1211,13 @@ const calculateOrderTotal = (order) => {
 const calculateTotalQty = (order) => {
   if (!order || !order.items) return 0;
   return order.items.reduce((qty, item) => qty + (Number(item.quantity) || 0), 0);
+};
+
+const hasOptionValue = (val) => {
+  if (!val && val !== 0) return false;
+  if (Array.isArray(val)) return val.length > 0;
+  if (typeof val === 'string') return val.trim().length > 0;
+  return true;
 };
 
 const formatDayName = (dateStr) => {

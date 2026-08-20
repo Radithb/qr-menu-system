@@ -600,14 +600,28 @@ const confirmAddToCart = (e) => {
     // The total base price for one item, excluding quantity
     menuToAdd.price = modalTotalPrice.value / modalQuantity.value;
     
-    // Prepare options including optional customer notes
-    const optionsPayload = { ...selectedOptions.value };
+    // Clean options: remove any empty arrays, empty strings, null, undefined
+    const cleanOptions = {};
+    Object.entries(selectedOptions.value).forEach(([key, val]) => {
+      if (Array.isArray(val)) {
+        if (val.length > 0) {
+          cleanOptions[key] = val;
+        }
+      } else if (typeof val === 'string') {
+        if (val.trim() !== '') {
+          cleanOptions[key] = val.trim();
+        }
+      } else if (val !== null && val !== undefined) {
+        cleanOptions[key] = val;
+      }
+    });
+    
     if (modalNotes.value && modalNotes.value.trim()) {
-      optionsPayload['Catatan'] = modalNotes.value.trim();
+      cleanOptions['Catatan'] = modalNotes.value.trim();
     }
     
     // Pass the options
-    cartStore.addToCart(menuToAdd, modalQuantity.value, optionsPayload);
+    cartStore.addToCart(menuToAdd, modalQuantity.value, cleanOptions);
     closeAddModal();
     if (e) animateAddToCart(e);
   }

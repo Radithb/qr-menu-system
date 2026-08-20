@@ -58,15 +58,19 @@
             <div class="flex-1 pr-4">
               <h4 class="font-bold text-[#4B2E2A] text-base font-heading">{{ item.name }}</h4>
               <div v-if="item.options && Object.keys(item.options).length > 0" class="mt-1 flex flex-wrap gap-1">
-                <span 
+                <template 
                   v-for="(value, key) in item.options" 
                   :key="key" 
-                  :class="key.toLowerCase() === 'catatan' ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold' : 'bg-[#E9D8C6] text-[#7A4A3A] font-bold'"
-                  class="text-[10px] px-2 py-0.5 rounded uppercase flex items-center gap-1"
                 >
-                  <svg v-if="key.toLowerCase() === 'catatan'" class="w-3 h-3 text-amber-700 inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                  <span>{{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
-                </span>
+                  <span 
+                    v-if="hasOptionValue(value)"
+                    :class="key.toLowerCase() === 'catatan' ? 'bg-amber-100 text-amber-900 border border-amber-300 font-bold' : 'bg-[#E9D8C6] text-[#7A4A3A] font-bold'"
+                    class="text-[10px] px-2 py-0.5 rounded uppercase flex items-center gap-1"
+                  >
+                    <svg v-if="key.toLowerCase() === 'catatan'" class="w-3 h-3 text-amber-700 inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <span>{{ key }}: {{ Array.isArray(value) ? value.join(', ') : value }}</span>
+                  </span>
+                </template>
               </div>
               <p class="text-[#7A4A3A] font-bold mt-1 text-sm">Rp {{ formatPrice(item.price) }} / porsi</p>
             </div>
@@ -296,6 +300,13 @@ const orderStore = useOrderStore();
 const isSubmitting = ref(false);
 const orderSuccess = ref(false);
 const isLoading = ref(true);
+
+const hasOptionValue = (val) => {
+  if (!val && val !== 0) return false;
+  if (Array.isArray(val)) return val.length > 0;
+  if (typeof val === 'string') return val.trim().length > 0;
+  return true;
+};
 
 // Payment Method State
 const paymentMethod = ref('QRIS'); // 'QRIS' | 'Kasir / Tunai'
