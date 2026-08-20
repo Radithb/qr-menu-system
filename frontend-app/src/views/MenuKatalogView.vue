@@ -91,7 +91,7 @@
       </div>
       
       <div v-else-if="menus.length === 0" class="text-center py-16 bg-card rounded-3xl border-2 border-primary/10 shadow-lg">
-        <p class="text-textColor/70 text-base font-medium">Menu belum tersedia di outlet ini.</p>
+        <p class="text-textColor/70 text-base font-medium">Menu belum tersedia saat ini.</p>
       </div>
 
       <div v-else-if="Object.keys(filteredGroupedMenus).length === 0" class="text-center py-16 bg-white/60 rounded-3xl border border-[#B98B6A]/20 shadow-sm px-4">
@@ -195,6 +195,26 @@
                 </label>
               </div>
             </div>
+          </div>
+
+          <!-- Catatan Khusus Pesanan -->
+          <div class="pt-4 border-t-2 border-primary/10 space-y-2">
+            <label class="font-bold text-textColor text-sm flex items-center justify-between">
+              <span class="flex items-center gap-2 text-[#4B2E2A]">
+                <svg class="w-4 h-4 text-[#7A4A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+                Catatan Pesanan
+              </span>
+              <span class="text-[11px] font-medium text-[#7A4A3A]/70">Opsional</span>
+            </label>
+            <textarea 
+              v-model="modalNotes" 
+              rows="2" 
+              placeholder="Contoh: Less ice, manis sedang, pedas sedikit, tanpa sedotan, dll." 
+              class="w-full p-3.5 bg-background/50 border-2 border-[#B98B6A]/20 focus:border-primary rounded-2xl text-xs font-medium text-textColor placeholder:text-textColor/40 focus:outline-none focus:bg-background transition-all resize-none shadow-sm"
+              maxlength="150"
+            ></textarea>
           </div>
 
           <div class="pt-4 border-t-2 border-primary/10 flex items-center justify-between">
@@ -347,6 +367,7 @@ const submitCustomerInfo = () => {
 
 const selectedMenu = ref(null);
 const selectedOptions = ref({});
+const modalNotes = ref('');
 const modalQuantity = ref(1);
 
 const categories = computed(() => {
@@ -519,29 +540,27 @@ const formatPrice = (price) => {
   return Number(price).toLocaleString('id-ID');
 };
 
-const openAddModal = (menu, e) => {
-  if (!menu.variants || menu.variants.length === 0) {
-    cartStore.addToCart(menu, 1);
-    if (e) animateAddToCart(e);
-    return;
-  }
-  
+const openAddModal = (menu) => {
   selectedMenu.value = menu;
   modalQuantity.value = 1;
+  modalNotes.value = '';
   selectedOptions.value = {};
   
-  // Default values for single type variants
-  menu.variants.forEach(variant => {
-    if (variant.type === 'single' && variant.options.length > 0) {
-      selectedOptions.value[variant.name] = variant.options[0].name;
-    } else if (variant.type === 'multiple') {
-      selectedOptions.value[variant.name] = [];
-    }
-  });
+  // Default values for single type variants if any
+  if (menu.variants && menu.variants.length > 0) {
+    menu.variants.forEach(variant => {
+      if (variant.type === 'single' && variant.options.length > 0) {
+        selectedOptions.value[variant.name] = variant.options[0].name;
+      } else if (variant.type === 'multiple') {
+        selectedOptions.value[variant.name] = [];
+      }
+    });
+  }
 };
 
 const closeAddModal = () => {
   selectedMenu.value = null;
+  modalNotes.value = '';
 };
 
 const modalTotalPrice = computed(() => {
@@ -574,8 +593,14 @@ const confirmAddToCart = (e) => {
     // The total base price for one item, excluding quantity
     menuToAdd.price = modalTotalPrice.value / modalQuantity.value;
     
-    // Pass the selectedOptions 
-    cartStore.addToCart(menuToAdd, modalQuantity.value, selectedOptions.value);
+    // Prepare options including optional customer notes
+    const optionsPayload = { ...selectedOptions.value };
+    if (modalNotes.value && modalNotes.value.trim()) {
+      optionsPayload['Catatan'] = modalNotes.value.trim();
+    }
+    
+    // Pass the options
+    cartStore.addToCart(menuToAdd, modalQuantity.value, optionsPayload);
     closeAddModal();
     if (e) animateAddToCart(e);
   }

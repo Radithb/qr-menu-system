@@ -128,11 +128,10 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Hot Tea', 'category' => 'Hot Drink', 'price' => 15000, 'variants' => null],
         ];
 
-        foreach ($createdOutlets as $o) {
-            foreach ($menus as $m) {
-                $m['outlet_id'] = $o->id;
-                Menu::create($m);
-            }
+        $firstOutlet = $createdOutlets[0];
+        foreach ($menus as $m) {
+            $m['outlet_id'] = $firstOutlet->id;
+            Menu::create($m);
         }
     }
 }

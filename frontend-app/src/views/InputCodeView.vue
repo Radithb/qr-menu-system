@@ -30,7 +30,7 @@
             Selamat Datang!
           </h2>
           <p class="text-[10px] sm:text-xs font-semibold leading-snug px-1">
-            Silahkan meminta bantuan pelayan<br>atau langsung input kode outlet
+            Silahkan meminta bantuan pelayan<br>atau langsung input kode meja Anda
           </p>
         </div>
         
@@ -62,9 +62,9 @@
             <p class="mt-1.5 text-[10px] font-bold text-[#A57C5A] px-1 tracking-wide">*Opsional</p>
           </div>
 
-          <!-- Kode Outlet -->
+          <!-- Kode Meja -->
           <div class="pt-2">
-            <label for="kode_outlet" class="sr-only">Kode Outlet</label>
+            <label for="kode_outlet" class="sr-only">Kode Meja</label>
             <input 
               id="kode_outlet" 
               v-model="inputCode"
@@ -75,7 +75,7 @@
               :class="[
                 isError ? 'border-red-500 ring-1 ring-red-500 animate-shake' : ''
               ]"
-              placeholder="Masukan Kode Outlet"
+              placeholder="Masukan Kode Meja"
               @input="handleInput"
             >
             <p v-if="isError" class="mt-1.5 text-center text-xs font-bold text-red-500 animate-pulse">
@@ -136,14 +136,14 @@ const route = useRoute();
 const orderStore = useOrderStore();
 
 onMounted(() => {
+  // Selalu kosongkan input nama, email, dan kode meja saat user membuka halaman utama
+  orderStore.resetCustomerData();
+  customerName.value = '';
+  customerEmail.value = '';
+  inputCode.value = '';
+
   if (route.query.meja) {
     orderStore.setNomorMeja(route.query.meja);
-  }
-  if (orderStore.customerName) {
-    customerName.value = orderStore.customerName;
-  }
-  if (orderStore.customerEmail) {
-    customerEmail.value = orderStore.customerEmail;
   }
 });
 
@@ -168,6 +168,7 @@ const validateCode = async () => {
     
     if (response.data.success) {
       orderStore.setOutletData(inputCode.value, response.data.data);
+      orderStore.setCustomerData(customerName.value.trim() || 'Pelanggan', customerEmail.value.trim() || '');
       if (response.data.data.nomor_meja) {
         orderStore.setNomorMeja(response.data.data.nomor_meja);
       }

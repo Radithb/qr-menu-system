@@ -17,6 +17,7 @@ class OrderController extends Controller
             'nomor_meja' => 'required|string',
             'customer_name' => 'nullable|string|max:255',
             'customer_email' => 'nullable|string|email|max:255',
+            'payment_method' => 'nullable|string|max:100',
             'items' => 'required|array',
             'items.*.menu_id' => 'required|exists:menus,id',
             'items.*.quantity' => 'required|integer|min:1',
@@ -34,6 +35,7 @@ class OrderController extends Controller
                 'customer_email' => $request->customer_email,
                 'status' => 'Menunggu Diproses',
                 'payment_status' => 'Unpaid',
+                'payment_method' => $request->payment_method ?? 'QRIS',
             ]);
 
             // Create Order Items
@@ -51,7 +53,7 @@ class OrderController extends Controller
             DB::commit();
 
             // Dispatch Event
-            event(new NewOrderCreated($order->load('items.menu')));
+            event(new NewOrderCreated($order->load(['items.menu', 'outlet'])));
 
             return response()->json([
                 'success' => true,
@@ -71,7 +73,7 @@ class OrderController extends Controller
 
     public function index($outlet_id = null)
     {
-        $query = Order::with('items.menu')
+        $query = Order::with(['items.menu', 'outlet'])
             ->where('status', '!=', 'Selesai')
             ->orderBy('created_at', 'desc');
 
@@ -89,7 +91,7 @@ class OrderController extends Controller
 
     public function history($outlet_id = null)
     {
-        $query = Order::with('items.menu')
+        $query = Order::with(['items.menu', 'outlet'])
             ->where('status', 'Selesai')
             ->orderBy('updated_at', 'desc')
             ->limit(100);
@@ -103,6 +105,60 @@ class OrderController extends Controller
         return response()->json([
             'success' => true,
             'data' => $orders
+        ]);
+    }
+
+    /**
+     * Riwayat Transaksi with filters (date_from, date_to, payment_method, search)
+     */
+    public function transactionHistory(Request $request)
+    {
+        $query = Order::with(['items.menu'])
+            ->where('status', 'Selesai')
+            ->orderBy('created_at', 'desc');
+
+        // Date filters
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        // Payment method filter
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+
+        // Search by customer name or order id
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('customer_name', 'like', "%{$search}%")
+                  ->orWhere('id', 'like', "%{$search}%")
+                  ->orWhere('nomor_meja', 'like', "%{$search}%");
+            });
+        }
+
+        $orders = $query->limit(500)->get();
+
+        // Calculate summary stats
+        $totalRevenue = $orders->sum(function($order) {
+            return $order->items->sum('subtotal');
+        });
+        $totalOrders = $orders->count();
+        $totalItems = $orders->sum(function($order) {
+            return $order->items->sum('quantity');
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $orders,
+            'summary' => [
+                'total_revenue' => $totalRevenue,
+                'total_orders' => $totalOrders,
+                'total_items' => $totalItems,
+            ]
         ]);
     }
 

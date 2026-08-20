@@ -11,21 +11,29 @@ export const useOrderStore = defineStore('order', () => {
     function resetCustomerData() {
         customerName.value = '';
         customerEmail.value = '';
+        localStorage.removeItem('customer_name');
+        localStorage.removeItem('customer_email');
+        sessionStorage.removeItem('customer_name');
+        sessionStorage.removeItem('customer_email');
     }
 
     function setOutletData(kode, data) {
         kodeOutlet.value = kode;
         outletData.value = data;
-        resetCustomerData();
+        localStorage.setItem('kode_outlet', kode || '');
+        localStorage.setItem('outlet_data', JSON.stringify(data || null));
     }
 
     function setNomorMeja(nomor) {
         nomorMeja.value = nomor;
+        localStorage.setItem('nomor_meja', nomor || '');
     }
 
     function setCustomerData(name, email) {
-        customerName.value = name;
-        customerEmail.value = email;
+        customerName.value = name || '';
+        customerEmail.value = email || '';
+        sessionStorage.setItem('customer_name', name || '');
+        sessionStorage.setItem('customer_email', email || '');
     }
 
     function clearData() {
@@ -34,6 +42,12 @@ export const useOrderStore = defineStore('order', () => {
         outletData.value = null;
         customerName.value = '';
         customerEmail.value = '';
+        localStorage.removeItem('kode_outlet');
+        localStorage.removeItem('nomor_meja');
+        localStorage.removeItem('outlet_data');
+        localStorage.removeItem('customer_name');
+        localStorage.removeItem('customer_email');
+        sessionStorage.clear();
     }
 
     return { 
@@ -42,6 +56,7 @@ export const useOrderStore = defineStore('order', () => {
         outletData, 
         customerName,
         customerEmail,
+        resetCustomerData,
         setOutletData, 
         setNomorMeja, 
         setCustomerData,

@@ -6,6 +6,19 @@ use Illuminate\Http\Request;
 
 class OutletController extends Controller
 {
+    /**
+     * List all outlets.
+     */
+    public function index()
+    {
+        $outlets = \App\Models\Outlet::orderBy('name')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $outlets
+        ]);
+    }
+
     public function validateCode(Request $request)
     {
         $request->validate([
@@ -17,13 +30,13 @@ class OutletController extends Controller
         if (!$outlet) {
             return response()->json([
                 'success' => false,
-                'message' => 'Kode outlet tidak valid atau tidak ditemukan.'
+                'message' => 'Kode meja tidak valid atau tidak ditemukan.'
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Kode outlet valid.',
+            'message' => 'Kode meja valid.',
             'data' => [
                 'id' => $outlet->id,
                 'name' => $outlet->name,
