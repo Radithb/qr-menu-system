@@ -66,9 +66,6 @@
                 </p>
               </div>
             </div>
-            <span v-if="orderStore.nomorMeja" class="px-3 py-1 bg-[#B98B6A]/20 text-[#7A4A3A] font-bold text-xs rounded-full">
-              Aktif
-            </span>
           </div>
 
           <!-- Nama Lengkap -->
