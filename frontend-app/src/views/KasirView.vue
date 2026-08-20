@@ -307,7 +307,7 @@
               <!-- Period Navigator -->
               <div class="flex flex-col sm:flex-row gap-4 mb-4 border-b border-[#B98B6A]/20 pb-4">
                 <div class="flex items-center gap-2">
-                  <label class="text-[10px] font-bold text-[#7A4A3A] uppercase tracking-wider">Mode Rentang:</label>
+                  <label class="text-[10px] font-bold text-[#7A4A3A] uppercase tracking-wider">Rentang Waktu:</label>
                   <div class="relative">
                     <select 
                       v-model="periodMode" 
