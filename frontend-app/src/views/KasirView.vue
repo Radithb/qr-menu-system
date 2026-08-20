@@ -757,7 +757,25 @@
           </div>
           <button @click="closeReceiptModal" class="w-8 h-8 rounded-full bg-[#E9D8C6] hover:bg-[#B98B6A]/30 text-[#4B2E2A] flex items-center justify-center transition-colors font-bold text-sm">✕</button>
         </div>
-        <div class="flex-1 overflow-y-auto py-4">
+
+        <!-- Cashier Name Input -->
+        <div class="px-1 pt-3 pb-1 no-print">
+          <div class="p-3 bg-[#E9D8C6]/50 rounded-2xl border border-[#B98B6A]/30 flex items-center gap-3">
+            <label class="text-xs font-bold text-[#4B2E2A] whitespace-nowrap flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-[#7A4A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              <span>Dilayani Oleh:</span>
+            </label>
+            <input 
+              v-model="cashierServerName" 
+              @input="localStorage.setItem('cashier_server_name', cashierServerName)"
+              type="text" 
+              placeholder="Nama pelayan / kasir..." 
+              class="flex-1 bg-white border border-[#B98B6A]/30 rounded-xl px-3 py-1.5 text-xs text-[#4B2E2A] font-bold focus:outline-none focus:ring-2 focus:ring-[#B98B6A]/50 placeholder-[#B98B6A]/50" 
+            />
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-3">
           <div class="receipt-paper bg-white text-gray-800 p-5 rounded-2xl shadow-md border border-gray-200 font-mono text-xs max-w-sm mx-auto">
             <div class="text-center space-y-1 pb-2 pt-1">
               <img :src="logoPersegi" alt="Logo" class="w-14 h-14 object-contain mx-auto mt-2 mb-2" />
@@ -771,7 +789,7 @@
               <div class="flex justify-between"><span class="text-gray-500">Waktu:</span><span class="text-gray-900">{{ formatFullDateTime(selectedReceiptOrder.created_at) }}</span></div>
               <div class="flex justify-between"><span class="text-gray-500">Pelanggan:</span><span class="font-semibold text-gray-900">{{ selectedReceiptOrder.customer_name || 'Pelanggan' }}</span></div>
               <div v-if="selectedReceiptOrder.customer_email" class="flex justify-between"><span class="text-gray-500">Email:</span><span class="text-gray-900 font-medium truncate max-w-[180px] text-right">{{ selectedReceiptOrder.customer_email }}</span></div>
-              <div class="flex justify-between"><span class="text-gray-500">Kasir:</span><span class="text-gray-900">Kasir Utama</span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Dilayani Oleh:</span><span class="font-bold text-gray-900">{{ cashierServerName || 'Kasir Utama' }}</span></div>
             </div>
             <div class="border-b-2 border-dashed border-gray-400 my-2"></div>
             <div class="space-y-2 py-1">
@@ -1035,6 +1053,7 @@ let toastTimeout = null;
 // ====== RECEIPT MODAL STATE ======
 const showReceiptModal = ref(false);
 const selectedReceiptOrder = ref(null);
+const cashierServerName = ref(localStorage.getItem('cashier_server_name') || 'Kasir Utama');
 
 // ====== MENU MANAGEMENT STATE ======
 const menuItems = ref([]);
