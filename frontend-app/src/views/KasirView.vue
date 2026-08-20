@@ -277,11 +277,11 @@
           </div>
 
           <!-- Decorative Love Graphic (Bottom Right) -->
-          <div class="fixed bottom-0 right-0 w-72 sm:w-88 md:w-96 pointer-events-none z-0 select-none overflow-hidden flex justify-end items-end">
+          <div class="fixed bottom-0 right-0 w-[380px] sm:w-[480px] md:w-[560px] pointer-events-none z-0 select-none overflow-hidden flex justify-end items-end">
             <img 
               src="@/assets/loveg.png" 
               alt="Love Graphic" 
-              class="w-full h-auto object-contain drop-shadow-sm opacity-85 mix-blend-screen" 
+              class="w-full h-auto object-contain drop-shadow-md opacity-85 mix-blend-screen translate-y-12 translate-x-8" 
             />
           </div>
         </main>
