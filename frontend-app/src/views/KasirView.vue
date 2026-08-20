@@ -281,7 +281,7 @@
             <img 
               src="@/assets/loveg.png" 
               alt="Love Graphic" 
-              class="w-full h-auto object-contain drop-shadow-md opacity-85 mix-blend-screen translate-y-28 sm:translate-y-36 translate-x-16 sm:translate-x-20" 
+              class="w-full h-auto object-contain drop-shadow-md opacity-85 mix-blend-screen translate-y-36 sm:translate-y-44 translate-x-16 sm:translate-x-20" 
             />
           </div>
         </main>
