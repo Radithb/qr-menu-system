@@ -9,6 +9,15 @@
         <div>
           <img src="@/assets/logonga.png" alt="Logo" class="h-24 sm:h-16 w-auto object-contain" />
         </div>
+
+        <!-- Table Number Badge -->
+        <div class="flex items-center gap-2 bg-white/85 backdrop-blur-sm px-3.5 py-1.5 rounded-2xl border border-[#B98B6A]/30 shadow-sm">
+          <img src="@/assets/chair.png" alt="Meja" class="w-4 h-4 object-contain" />
+          <div class="flex items-baseline gap-1">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#7A4A3A]">Meja</span>
+            <span class="text-sm font-extrabold text-[#4B2E2A]">{{ orderStore.nomorMeja || '-' }}</span>
+          </div>
+        </div>
       </div>
       
       <!-- Search Input Bar -->
