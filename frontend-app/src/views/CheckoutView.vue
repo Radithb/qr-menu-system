@@ -222,8 +222,11 @@
 
           <!-- Petunjuk Singkat -->
           <div class="bg-[#E9D8C6]/50 rounded-xl p-3 text-left border border-[#B98B6A]/15 space-y-1 text-[11px] text-[#4B2E2A]">
-            <p class="font-bold flex items-center gap-1.5 text-xs text-[#4B2E2A] mb-1.5">
-              <span>💡</span> Cara Pembayaran:
+            <p class="font-extrabold flex items-center gap-1.5 text-xs text-[#4B2E2A] mb-1.5">
+              <svg class="w-4 h-4 text-[#7A4A3A] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+              </svg>
+              <span>Cara Pembayaran:</span>
             </p>
             <p class="leading-relaxed">1. Buka aplikasi <strong>GoPay, BCA, Dana, OVO</strong>, atau m-Banking Anda.</p>
             <p class="leading-relaxed">2. Scan barcode QRIS di atas.</p>
