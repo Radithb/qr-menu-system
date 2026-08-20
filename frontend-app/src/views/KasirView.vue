@@ -275,15 +275,6 @@
             </div>
 
           </div>
-
-          <!-- Decorative Love Graphic (Bottom Right) -->
-          <div class="fixed bottom-0 right-0 w-[380px] sm:w-[480px] md:w-[560px] pointer-events-none z-0 select-none overflow-hidden flex justify-end items-end">
-            <img 
-              src="@/assets/loveg.png" 
-              alt="Love Graphic" 
-              class="w-full h-auto object-contain drop-shadow-md opacity-85 mix-blend-screen translate-y-36 sm:translate-y-44 translate-x-16 sm:translate-x-20" 
-            />
-          </div>
         </main>
       </template>
 
@@ -308,8 +299,8 @@
           </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto no-print">
-          <div class="max-w-7xl mx-auto px-8 py-6 space-y-6">
+        <main class="flex-1 overflow-y-auto no-print relative">
+          <div class="max-w-7xl mx-auto px-8 py-6 space-y-6 relative z-10">
 
             <!-- Filter Bar -->
             <div class="bg-[#F7F2EC]/95 rounded-2xl p-5 border border-[#B98B6A]/20 shadow-sm backdrop-blur-sm">
@@ -660,8 +651,8 @@
         </header>
 
         <!-- Menu Content -->
-        <main class="flex-1 p-8 overflow-y-auto">
-          <div class="max-w-6xl mx-auto">
+        <main class="flex-1 p-8 overflow-y-auto relative">
+          <div class="max-w-6xl mx-auto relative z-10">
 
             <!-- Loading Menu -->
             <div v-if="isMenuLoading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -731,6 +722,15 @@
           </div>
         </main>
       </template>
+
+      <!-- Decorative Love Graphic (Bottom Right - Present on all cashier subpages) -->
+      <div class="fixed bottom-0 right-0 w-[380px] sm:w-[480px] md:w-[560px] pointer-events-none z-0 select-none overflow-hidden flex justify-end items-end no-print">
+        <img 
+          src="@/assets/loveg.png" 
+          alt="Love Graphic" 
+          class="w-full h-auto object-contain drop-shadow-md opacity-85 mix-blend-screen translate-y-36 sm:translate-y-44 translate-x-16 sm:translate-x-20" 
+        />
+      </div>
 
     </div>
 
