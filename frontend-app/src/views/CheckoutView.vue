@@ -176,48 +176,48 @@
     <!-- =================================== -->
     <div 
       v-if="showQrisModal" 
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto"
+      class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/65 backdrop-blur-sm overflow-y-auto"
     >
-      <div class="bg-[#F7F2EC] rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-[#B98B6A]/30 flex flex-col max-h-[92vh] my-auto">
+      <div class="bg-[#F7F2EC] rounded-3xl p-5 sm:p-6 max-w-md w-full shadow-2xl border border-[#B98B6A]/30 flex flex-col max-h-[94vh] my-auto">
         <!-- Modal Header -->
         <div class="flex justify-between items-center pb-3 border-b border-[#B98B6A]/20">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-[#4B2E2A] text-white flex items-center justify-center">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-[#4B2E2A] text-white flex items-center justify-center shadow-sm">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
             </div>
             <div>
-              <h3 class="text-base font-bold text-[#4B2E2A] leading-tight">Pembayaran QRIS</h3>
+              <h3 class="text-base font-extrabold text-[#4B2E2A] leading-tight font-heading">Pembayaran QRIS</h3>
               <p class="text-[10px] text-[#7A4A3A] font-medium">Kopi Ruang Hati</p>
             </div>
           </div>
-          <button @click="showQrisModal = false" class="w-7 h-7 rounded-full bg-[#E9D8C6] hover:bg-[#B98B6A]/30 text-[#4B2E2A] flex items-center justify-center font-bold text-xs transition-colors">✕</button>
+          <button @click="showQrisModal = false" class="w-8 h-8 rounded-full bg-[#E9D8C6] hover:bg-[#B98B6A]/30 text-[#4B2E2A] flex items-center justify-center font-bold text-sm transition-colors">✕</button>
         </div>
 
         <!-- QRIS Content -->
-        <div class="flex-1 overflow-y-auto py-3 space-y-3 text-center">
+        <div class="flex-1 overflow-y-auto py-3 space-y-3.5 text-center">
           <!-- Total Bayar Box -->
           <div class="bg-white p-3.5 rounded-2xl border border-[#B98B6A]/20 shadow-sm flex items-center justify-between">
             <div class="text-left">
               <p class="text-[10px] font-bold text-[#7A4A3A] uppercase tracking-wider">Total Tagihan</p>
-              <p class="text-xl font-extrabold text-[#4B2E2A] font-heading leading-tight">Rp {{ formatPrice(lastOrderTotal) }}</p>
+              <p class="text-2xl font-extrabold text-[#4B2E2A] font-heading leading-tight">Rp {{ formatPrice(lastOrderTotal) }}</p>
             </div>
             <button 
               @click="copyTotal" 
-              class="px-3 py-1.5 rounded-lg bg-[#E9D8C6] hover:bg-[#B98B6A]/30 text-[#4B2E2A] text-xs font-bold transition-all flex items-center gap-1"
+              class="px-3.5 py-2 rounded-xl bg-[#E9D8C6] hover:bg-[#B98B6A]/30 text-[#4B2E2A] text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
               <span>{{ isCopied ? 'Tersalin!' : 'Salin' }}</span>
             </button>
           </div>
 
-          <!-- Barcode QRIS Image Card -->
-          <div class="bg-white p-3 rounded-2xl border-2 border-[#B98B6A]/30 shadow-md inline-block max-w-full">
+          <!-- Barcode QRIS Image Card (Enlarged & Prominent) -->
+          <div class="bg-white p-3.5 sm:p-4 rounded-3xl border-2 border-[#B98B6A]/30 shadow-md mx-auto w-full max-w-[340px]">
             <img 
               :src="qrisImage" 
               alt="QRIS Kopi Ruang Hati" 
-              class="w-56 h-auto object-contain mx-auto rounded-xl"
+              class="w-full h-auto max-h-[380px] object-contain mx-auto rounded-2xl shadow-sm"
             />
-            <p class="text-[10px] text-gray-500 mt-2 font-medium">NMID: KOPI RUANG HATI</p>
+            <p class="text-[10px] text-gray-500 mt-2 font-bold tracking-wider uppercase">NMID: KOPI RUANG HATI</p>
           </div>
 
           <!-- Petunjuk Singkat -->
