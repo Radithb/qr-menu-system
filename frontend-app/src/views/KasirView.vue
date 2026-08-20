@@ -22,25 +22,12 @@
 
     <!-- Sidebar Kasir -->
     <aside class="w-80 bg-[#E9D8C6]/95 border-r border-[#B98B6A]/30 flex flex-col h-screen sticky top-0 shadow-lg backdrop-blur-sm z-20 no-print">
-      <div class="px-6 py-5 border-b border-[#B98B6A]/20">
-        <div class="flex flex-col gap-3.5">
-          <!-- Medium Balanced Logo -->
-          <div class="flex items-center justify-center py-1">
-            <img 
-              src="@/assets/logo-panjang.png" 
-              alt="Kopi Ruang Hati" 
-              class="w-full max-w-[135px] h-auto object-contain mix-blend-multiply" 
-            />
-          </div>
-          <!-- Status Row -->
-          <div class="flex items-center justify-between bg-white/60 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-[#B98B6A]/20 shadow-sm">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-sm"></span>
-              <span class="text-xs font-extrabold uppercase tracking-wider text-[#4B2E2A]">POS KASIR</span>
-            </div>
-            <span class="text-[10px] font-extrabold text-[#7A4A3A] bg-[#B98B6A]/20 px-2.5 py-0.5 rounded-md uppercase tracking-wider">Online</span>
-          </div>
-        </div>
+      <div class="px-6 py-5 border-b border-[#B98B6A]/20 flex items-center justify-center">
+        <img 
+          src="@/assets/logo-panjang.png" 
+          alt="Kopi Ruang Hati" 
+          class="w-full max-w-[145px] h-auto object-contain mix-blend-multiply" 
+        />
       </div>
       
       <div class="p-6 flex-1 overflow-y-auto space-y-5">
